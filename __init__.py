@@ -34,32 +34,22 @@ from Objects.account.Forms import DelimitedNumberInput, createUser, userLogin, u
 # sys.path.remove(main_dir)
 
 
-Chingyi_Domain = "https://ubiquitous-enigma-r4g7v9wr9vg4c5jp9-5000.app.github.dev/"
-WeiHeng_Domain = "https://confunius-sturdy-space-guide-9pwww99p7vqfxrqw-5000.app.github.dev/"
-Presentation = True
+WeiHeng_Domain = "https://congenial-disco-5g444v96pv537v7x-5000.app.github.dev/"
 Public_key = ""
 Private_key = ""
 
 cartobj = Cart()
 wishlistobj = Wishlist()
 
-if Presentation == True:
-    Domain = WeiHeng_Domain
-    Public_key = "6LeJypInAAAAAEc9ZdK6sjIO1e_mA4AEvwNVWkVe"
-    Private_key = "6LeJyplnAAAAAFHw6VagR9VHmkvAjGÄD8dVaxnNQ"
-    print("Wei heng's domain is being used.")
-    
-elif Presentation == False:
-    Domain = Chingyi_Domain
-    Public_key ="6LehwpInAAAAAFvfSbp_VZ2McYWNIqlKCVoq86dR"
-    Private_key ='6LehwpInAAAAABNvNls3L2jaHbG1rx6DlyDcXur-'
-    print("Ching yi's domain is being used")
+Domain = WeiHeng_Domain
+Public_key = "6LdgM_8nAAAAAA5r2dkOXO5Fn3tnZaXPODjXLRMs"
+Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 app.config['SENDGRID_API_KEY'] = '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'
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
-app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key  # Add this line
+app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
 app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
 
@@ -2003,6 +1993,8 @@ faqs = [
 ]
 if get_faqs_from_shelve() == '':
     save_faqs_to_shelve(faqs)
+
+# Teacher
 
 
 if __name__ == '__main__':
