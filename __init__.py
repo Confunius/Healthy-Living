@@ -1990,6 +1990,8 @@ faqs = [
 if get_faqs_from_shelve() == '':
     save_faqs_to_shelve(faqs)
 
+# Teacher
+
 
 if __name__ == '__main__':
     app.run(debug=True)
