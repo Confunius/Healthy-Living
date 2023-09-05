@@ -42,14 +42,14 @@ cartobj = Cart()
 wishlistobj = Wishlist()
 
 Domain = WeiHeng_Domain
-Public_key = "6LcG2f4nAAAAAFUxTq2NSHEqoC-sXoNEw9V3FJIS"
-Private_key = "6LcG2f4nAAAAAFv-54z4VzKFjfWd1Yi1iIg8s1wj"
+Public_key = "6LdgM_8nAAAAAA5r2dkOXO5Fn3tnZaXPODjXLRMs"
+Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 app.config['SENDGRID_API_KEY'] = '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'
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
-app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key  # Add this line
+app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
 app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
 
