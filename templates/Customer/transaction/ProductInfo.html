@@ -54,7 +54,7 @@
 </div>
 
 <!-- Floating Sidebar for Buttons -->
-<div class="position-fixed m-4" style="right:0;">
+<div class="position-fixed m-4" style="right:0;top:50%;">
     <div class="d-flex flex-column">
         <form action="{{ url_for('add_to_cart') }}" method="post" id="add-to-cart-form" onsubmit="return addtocart()">  {# this is the add to cart button #}
             <input type="hidden" name="product_id" value="{{ productobj.product_id }}">
