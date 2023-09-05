@@ -1550,6 +1550,10 @@ def join_and_filter(list_):
 app.jinja_env.filters['join_and'] = join_and_filter
 
 
+@app.route('/Teachers/CreateAccount')
+def teacher_createacc():
+    #
+
 @app.route('/admin/product')
 def product_admin():
     product_list = []
