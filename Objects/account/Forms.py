@@ -25,7 +25,7 @@ class DelimitedNumberInput(TextInput):
         return super(DelimitedNumberInput, self).__call__(field, **kwargs)
 
 class createUser(FlaskForm):
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
     userFullName = StringField('Full Name: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
     userName = StringField('Username: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
     userEmail = EmailField('Email: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
