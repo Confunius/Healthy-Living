@@ -577,12 +577,7 @@ def product_info(product_id):
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
-<<<<<<< HEAD
 # for courses
-=======
-
-#for courses
->>>>>>> ef2f338 (WIP: Fixing recaptcha bug)
 @app.route('/course')
 def courses():
     coursesList = []
