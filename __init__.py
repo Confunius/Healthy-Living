@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 import requests
 import sendgrid
 from sendgrid.helpers.mail import Mail, From, To
-from flask_wtf.recaptcha import RecaptchaField
+#from flask_wtf.recaptcha import RecaptchaField
 from markupsafe import Markup
 
 # current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -47,11 +47,11 @@ Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SENDGRID_API_KEY'] = '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'
+app.config['SENDGRID_API_KEY'] = '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'
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
 app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
-app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
+#app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
 
 
 # Replace with your own secret key
@@ -115,6 +115,7 @@ def Login():
         email = create_user_form.userEmail.data
         password = create_user_form.userPassword.data
 
+        print(users_dict)
         for key, user_data in users_dict.items():
             if user_data.get_userEmail() == email and user_data.get_userPassword() == password:
                 if user_data.get_userVerified() == 1:
@@ -155,6 +156,38 @@ def Login():
                     session['admin_logged_in'] = True
                     db.close()
                     return redirect(url_for('ahome'))
+    
+        teachers_dict = db.get('teachers', {})
+        print("Plz work 1")
+        print(teachers_dict)
+
+        teacher_email = create_user_form.userEmail.data
+        teacher_password = create_user_form.userPassword.data
+
+        print("Plz work 1.5")
+
+        for key, teacher_data in teachers_dict.items():
+            print("Plz work 1.6")
+            if teacher_data.get_teacherEmail() == teacher_email and teacher_data.get_teacherPassword() == teacher_password:
+                if teacher_data.get_teacherVerified() == 'deactivated':
+                    #flask.flash("Your account has been deactivated. Please contact an administrator to reactivate your account.", category="danger")
+                    print("Plz work 2")
+                    return render_template('/Customer/account/LoginPage.html', form=create_user_form)
+                else:
+                    """
+                    session['id'] = key
+                    session['teacherfname'] = teacher_data.get_teacherFirstName()
+                    session['teacherlname'] = teacher_data.get_teacherLastName()
+                    session['teacherusername'] = teacher_data.get_teacherUserName()
+                    session['teacheremail'] = teacher_data.get_teacherEmail()
+                    session['teacherphonenumber'] = teacher_data.get_teacherPhoneNumber()
+                    session['teacher_logged_in'] = True
+                    db.close()
+                    """
+                    print("Plz work 3")
+                    return redirect(url_for('ahome'))
+
+    print("pLZ work 4")
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
@@ -185,11 +218,11 @@ def UserRegistrationPage():
         userCfmPassword = create_user_form.userCfmPassword.data
         if not userPassword == userCfmPassword:
             # flash("Password and Confirm Password does not match.", category="danger")
-            return redirect("/CustomerRegistration")
+            return redirect("/UserRegistration")
 
         user = User(create_user_form.userFullName.data, create_user_form.userName.data, create_user_form.userPassword.data,
                              create_user_form.userEmail.data, create_user_form.userCfmPassword.data,
-                             create_user_form.userAddress.data, create_user_form.userPostalCode.data)
+                             create_user_form.userAddress.data, create_user_form.userPostalCode.data, create_user_form.userRole.data)
         print("User is created", user)
 
         users_dict[user.get_user_id()] = user #users_dict[3] = user // user_dict = {1:user, 3:user}
@@ -549,8 +582,7 @@ def product_info(product_id):
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
-
-#for courses
+# for courses
 @app.route('/course')
 def courses():
     coursesList = []
@@ -597,6 +629,8 @@ def courses():
         review_db.close()
     except:
         coursesList = []
+    return redirect(url_for('product_info', courseId=course_Id))
+        
 
 
 
@@ -659,13 +693,19 @@ def add_to_cart():
     db = shelve.open(db_path, 'r')
     product = db.get(product_id)
     default_quantity = 1
-    default_color = product.color_options[0]
-    default_size = product.size_options[0]
+    default_color = None
+    default_size = None
+    if product.color_options != [] or product.size_options != []:
+        default_color = product.color_options[0]
+        default_size = product.size_options[0]
     db.close()
 
     quantity = int(request.form.get('quantity', default_quantity))
-    size = request.form.get('size', default_size)
-    color = request.form.get('color', default_color)
+    size = default_size
+    color = default_color
+    if product.color_options != [] or product.size_options != []:     
+        size = request.form.get('size', default_size)
+        color = request.form.get('color', default_color)
 
     # Fetch the current quantity of the product in the cart
     current_quantity_in_cart = 0
@@ -804,11 +844,19 @@ def display_payment():
     db_file = 'Objects/transaction/promo.db'
     allow_promo = os.path.isfile(db_file)
     for item in cart_items:
-        line_item = {
-            'price': find_product(item.name, item.color, item.size)["default_price"],
-            'quantity': item.quantity,
-            'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
-        }
+        print(item.name, find_product(item.name)[0])
+        if item.color != None and item.size != None:
+            line_item = {
+                'price': find_product(item.name, item.color, item.size)["default_price"],
+                'quantity': item.quantity,
+                'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
+            }
+        else:
+            line_item = {
+                'price': find_product(item.name)[0]["default_price"],
+                'quantity': item.quantity,
+                'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
+            }
 
         line_items.append(line_item)
     try:
@@ -1603,80 +1651,176 @@ def product_admin():
     db_path = 'Objects/transaction/product.db'
     if not os.path.exists(db_path):
         placeholder_data = [
-
             {
                 "product_id": "P1",
-                "name": "Men 100% Cotton Linen Long Sleeve Shirt",
-                "color_options": ["White", "Green"],
-                "size_options": ["M", "L"],
-                "cost_price": 8,
-                "list_price": 16,
-                "stock": 3,
-                "description": "Introducing the \"Men 100% Cotton Linen Long Sleeve Shirt\"! Crafted with the finest blend of cotton and linen, this classic white shirt boasts both style and comfort. Perfect for casual outings or semi-formal occasions, its long sleeves add an air of sophistication to any ensemble. The breathable fabric ensures you stay cool and relaxed all day long. Embrace a timeless, versatile look with this essential wardrobe piece that pairs effortlessly with jeans, chinos, or tailored trousers. Designed to exude elegance and confidence, this shirt is a must-have for every fashion-forward gentleman. Get ready to make a lasting impression.",
-                "image": "https://m.media-amazon.com/images/I/615Cby-DciL._AC_SX679_.jpg",
-                "category": "Men's Casual"
+                "name": "Women's Tri-Blend T-Shirt",
+                "color_options": ["Red", "Black"],
+                "size_options": ["S", "M"],
+                "cost_price": 15,
+                "list_price": 25,
+                "stock": 54,
+                "description": "Elevate your workout style with our Women’s Tri-Blend T-Shirt. Crafted for both comfort and performance, this shirt is a must-have for fitness enthusiasts. Its soft, breathable fabric ensures you stay cool during your workouts, while the flattering design keeps you looking chic. Priced at just $25, it's an affordable addition to your fitness wardrobe.",
+                "image": "https://m.media-amazon.com/images/I/81NkOeFp8yL._AC_SL1500_.jpg",
+                "category": "Fitness Apparel"
             },
             {
                 "product_id": "P2",
-                "name": "Women Organic Dye Casual Jacket",
-                "color_options": ["White", "Blue"],
-                "size_options": ["S", "L"],
-                "cost_price": 14,
-                "list_price": 18,
-                "stock": 5,
-                "description": "Women Organic Dye Casual Jacket! Elevate your style with this eco-friendly \"Women Organic Dye Casual Jacket.\" Crafted with organic dyes and sustainably sourced materials, this jacket embodies a perfect blend of fashion and environmental consciousness. The soft and breathable fabric ensures comfort without compromising on style. Its pristine white color complements any outfit, making it a versatile addition to your wardrobe. Embrace the essence of modern femininity as you step out in this chic jacket, designed to make a statement at casual gatherings or outings with friends. Embrace sustainability with flair and inspire others to do the same.",
-                "image": "https://m.media-amazon.com/images/I/81mrNU4gF3L._AC_SX569_.jpg",
-                "category": "Women's Casual"
+                "name": "Men's Tri-Blend T Shirt",
+                "color_options": ["Grey", "White"],
+                "size_options": ["M", "L"],
+                "cost_price": 15,
+                "list_price": 25,
+                "stock": 45,
+                "description": "Introducing our Men’s Tri-Blend T-Shirt - the perfect fusion of style and functionality. Priced at $25, this shirt offers unbeatable value for your fitness attire. With its premium fabric and comfortable fit, it's your go-to choice for workouts and beyond.",
+                "image": "https://m.media-amazon.com/images/I/61lU+iSVXQL._AC_SY741_.jpg",
+                "category": "Fitness Apparel"
             },
             {
                 "product_id": "P3",
-                "name": "Women Tank Top 100% Recycled Fibers",
-                "color_options": ["White", "Red"],
-                "size_options": ["S", "M"],
-                "cost_price": 6,
-                "list_price": 12,
-                "stock": 2,
-                "description": "Women Tank Top 100% Recycled Fibers! Embrace a greener lifestyle with our \"Women Tank Top 100% Recycled Fibers.\" Made from environmentally friendly materials, this white tank top not only enhances your workout performance but also reduces your carbon footprint. The soft and stretchable fabric provides a comfortable and supportive fit, making it ideal for any active lifestyle. Whether you're hitting the gym, going for a run, or practicing yoga, this tank top ensures you stay cool and dry throughout your workout. Embrace sustainability without compromising on style, and let this tank top be a reflection of your commitment to a healthier planet.",
-                "image": "https://m.media-amazon.com/images/I/61a9kY47XPL._AC_SX679_.jpg",
-                "category": "Women's Sportswear"
+                "name": "Motivational 1L Sports Water Bottle",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 13,
+                "description": "Stay hydrated and motivated with our Motivational 1L Sports Water Bottle. With inspiring quotes to fuel your fitness journey, this bottle is your constant companion. Priced affordably, it's a reminder to keep pushing towards your goals.",
+                "image": "https://m.media-amazon.com/images/I/81sRIW9C0xL._AC_SL1500_.jpg",
+                "category": "Fitness Apparel"
+            },
+            {
+                "product_id": "P4",
+                "name": "OPTIMUM NUTRITION Gold Standard 100% Whey Protein Powder 2LB",
+                "cost_price": 60,
+                "list_price": 75,
+                "stock": 30,
+                "description": "Fuel your muscles with the best - OPTIMUM NUTRITION Gold Standard Whey Protein. With 24 grams of protein per serving, it's the gold standard for muscle recovery and growth. Get it now and maximize your fitness gains.",
+                "image": "https://m.media-amazon.com/images/I/61TKrit75mL._AC_SL1500_.jpg",
+                "category": "Nutritional Supplements"
+            },
+            {
+                "product_id": "P5",
+                "name": "OPTIMUM NUTRITION Micronized Create Monohydrate Powder, Unflavored, Keto Friendly, 1.32LB",
+                "cost_price": 65,
+                "list_price": 80,
+                "stock": 25,
+                "description": "Boost your workout performance with OPTIMUM NUTRITION Creatine Monohydrate. This unflavored, keto-friendly powder is a game-changer for strength and endurance. Elevate your fitness regimen with this essential supplement.",
+                "image": "https://m.media-amazon.com/images/I/71kQRMrkPdL._AC_SL1500_.jpg",
+                "category": "Nutritional Supplements"
+            },
+            {
+                "product_id": "P6",
+                "name": "Gratitude: A Day and Night Reflection Journal (90 Days)",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 13,
+                "description": "A Day and Night Reflection Journal will help you center your day around positive feelings and gratitude. It’s the perfect place to record and celebrate anything that you are grateful for and to preserve important memories. This 90-day journal gives you a path to creating a habit of daily gratitude that you can carry with you throughout your life. Cultivating gratitude is one of the most potent and important mindfulness exercises, and thankfulness has proven to have a positive effect on a person's mental health and general well-being.<br>Each page of the journal includes space to record expressions of gratitude, personal affirmations, memories of positive interactions, and commentaries on the significance of it all. The journal is intended for those who want to foster deep reflection as well as for those who simply want to discover the effects of thankfulness. Having filled the journal with statements of gratitude, you will end up with a personal trove of wonderful reflections, which can be a source of positive inspiration at any time.",
+                "image": "https://m.media-amazon.com/images/I/71TDknMziYL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P7",
+                "name": "SMART Goal Journal",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 52,
+                "description": "Achieve your fitness goals with our SMART Goal Journal. Set specific, measurable, attainable, relevant, and time-bound goals. Stay on track and watch your progress soar.",
+                "image": "https://m.media-amazon.com/images/I/313fVsC25oL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P8",
+                "name": "Nutrition Logbook",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 132,
+                "description": "Track your nutrition with our Nutrition Logbook. Whether you're counting macros or simply eating mindfully, this logbook is your tool for nutritional success.",
+                "image": "https://m.media-amazon.com/images/I/710XGSnEAzL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P9",
+                "name": "FLYBIRD Adjustable Dumbbells, 25/30/50/55lb",
+                "cost_price": 150,
+                "list_price": 250,
+                "stock": 23,
+                "description": "Transform your home into a personal gym with FLYBIRD Adjustable Dumbbells. These versatile weights allow you to tailor your workouts to your fitness level. Say goodbye to expensive gym memberships.",
+                "image": "https://m.media-amazon.com/images/I/71T31CPFA+L._AC_SL1500_.jpg",
+                "category": "Home Gym"
+            },
+            {
+                "product_id": "P10",
+                "name": "Wall Mounted - Pullup Bar",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 25,
+                "description": "Take your upper body strength to new heights with our Wall Mounted Pull-up Bar. Easy to install at home, it's the perfect addition to your fitness space. Get ready to conquer those pull-ups.",
+                "image": "https://m.media-amazon.com/images/I/41SJeg-B01L._AC_SL1024_.jpg",
+                "category": "Home Gym"
             },
         ]
         # stripe payment
         for product in placeholder_data:
-            for color in product["color_options"]:
-                for size in product["size_options"]:
-                    try:
-                        stripe_details = stripe.Product.create(
-                            name=f"{product['name']} | {color} | {size}",
-                            default_price_data={
-                                "unit_amount": int(product["list_price"] * 100),
-                                "currency": "sgd",
-                            },
-                            images=[product["image"]],
-                        )
-                        # stripe.Product.modify(
-                        #     stripe_details["id"],
-                        #     url=Domain+"/product/"+product["id"],
-                        # )
-                    except Exception as e:
-                        print(
-                            f"Failed to create product {product['product_id']}: {str(e)}")
+            # if the keys cost_price and list_price are in product.
+            print(list(product.keys()))
+            print("color_options" in list(product.keys()))
+            if "color_options" in list(product.keys()) and "size_options" in list(product.keys()):
+                for color in product["color_options"]:
+                    for size in product["size_options"]:
+                        try:
+                            stripe.Product.create(
+                                name=f"{product['name']} | {color} | {size}",
+                                default_price_data={
+                                    "unit_amount": int(product["list_price"] * 100),
+                                    "currency": "sgd",
+                                },
+                                images=[product["image"]],
+                            )
+                        except Exception as e:
+                            print(
+                                f"Failed to create product {product['product_id']}: {str(e)}")
+            else:
+                try:
+                    stripe.Product.create(
+                        name=product['name'],
+                        default_price_data={
+                            "unit_amount": int(product["list_price"] * 100),
+                            "currency": "sgd",
+                        },
+                        images=[product["image"]],
+                    )
+                except Exception as e:
+                    print(
+                        f"Failed to create product {product['product_id']}: {str(e)}")
 
         db = shelve.open(db_path, 'c')
         for data in placeholder_data:
-            product = Product(
+            if "color_options" in list(data.keys()) and "size_options" in list(data.keys()):
+
+                product = Product(
+                    data["product_id"],
+                    data["name"],
+                    data["color_options"],
+                    data["size_options"],
+                    float(data["cost_price"]),
+                    float(data["list_price"]),
+                    data["stock"],
+                    data["description"],
+                    data["image"],
+                    data["category"],
+                )
+                db[product.product_id] = product
+            else:
+                product = Product(
                 data["product_id"],
                 data["name"],
-                data["color_options"],
-                data["size_options"],
+                None,
+                None,
                 float(data["cost_price"]),
                 float(data["list_price"]),
                 data["stock"],
                 data["description"],
                 data["image"],
                 data["category"],
-            )
-            db[product.product_id] = product
+                )
+                db[product.product_id] = product
         db.close()
 
     db = shelve.open(db_path, 'r')
@@ -1689,6 +1833,10 @@ def product_admin():
     for key in product_dict:
         product = product_dict.get(key)
         product_list.append(product)
+    # prints out all the products and their info
+    for product in product_list:
+        print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
+        print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
     return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
 
 
@@ -2049,5 +2197,4 @@ if get_faqs_from_shelve() == '':
 # Teacher
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__':    app.run(debug=True)

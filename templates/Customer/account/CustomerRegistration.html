@@ -36,13 +36,16 @@
         <div class="form-group2 m-3">
           {{ render_field(form.userPostalCode, class="form-control")}}
         </div>
+        <div class="form-group2 m-3">
+          {{ render_field(form.userRole, class="form-control")}}
+        </div>
       </div>
       <div class="title" style="color:#4B6043;"><strong><u>MEMBERSHIP AGREEMENT*</u></strong></div>
       <p style="font-size:13px;">By creating an account, you agree to Ecofashion Hub's Privacy Policy and terms of use.</p>
     </div>
-      <div class="form-group2 mb-3 d-flex justify-content-center">
+      <!--<div class="form-group2 mb-3 d-flex justify-content-center">
           {{render_field(form.recaptcha, class="form-control")}}
-      </div>
+      </div>-->
       <div class="button-container d-flex flex-column">
       <button type="submit" class="g-recaptcha btn text-light bgd-dark" data-sitekey="{{ site_key }}" data-callback="onSubmit" data-action="submit" style="color: #4b6043;">Create</button>
       </div>
