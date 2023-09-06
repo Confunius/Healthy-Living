@@ -125,6 +125,7 @@ def Login():
                     session['useremail'] = user_data.get_userEmail()
                     session['useraddress'] = user_data.get_userAddress()
                     session['userpostalcode'] = user_data.get_userPostalCode()
+                    session['user_role'] = user_data.get_userRole()
                     session['user_logged_in'] = True
                     db.close()
 
@@ -437,6 +438,7 @@ def OrderStatus():
 @app.route('/OrderHistory')
 def OrderHistory():
     combined_list = []
+    products_for_order = []
 
     with shelve.open('Objects/transaction/order.db') as order_db:
         with shelve.open('Objects/transaction/product.db') as product_db:
@@ -528,7 +530,11 @@ def products():
     # Create a list of unique categories from the product_list
     categories = list(set(product.category for product in product_list))
 
-    return render_template('/Customer/transaction/Product.html', product_list=product_list, count=len(product_list), categories=categories)
+    # Sort the lists by alphabetical order
+    sorted_product_list = sorted(product_list, key=lambda product: product.name)
+    sorted_categories = sorted(categories)
+
+    return render_template('/Customer/transaction/Product.html', product_list=sorted_product_list, count=len(product_list), categories=sorted_categories)
 
 
 
@@ -631,7 +637,6 @@ def courses():
         coursesList = []
     #return redirect(url_for('onlineCourse', courseId=courseId))
     return render_template('/Customer/transaction/Course.html')
-        
 
 
 @app.route('/course/<course_id>')
