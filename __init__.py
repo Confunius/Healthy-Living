@@ -529,7 +529,11 @@ def products():
     # Create a list of unique categories from the product_list
     categories = list(set(product.category for product in product_list))
 
-    return render_template('/Customer/transaction/Product.html', product_list=product_list, count=len(product_list), categories=categories)
+    # Sort the lists by alphabetical order
+    sorted_product_list = sorted(product_list, key=lambda product: product.category)
+    sorted_categories = sorted(categories)
+
+    return render_template('/Customer/transaction/Product.html', product_list=sorted_product_list, count=len(product_list), categories=sorted_categories)
 
 
 

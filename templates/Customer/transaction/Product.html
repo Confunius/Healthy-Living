@@ -39,38 +39,45 @@
         {% if product_list|length == 0 %}
         <h1 class="text-center">No products found</h1>
         {% else %}
-        <div class="d-flex flex-wrap flex-fill">
-            {% for product in product_list %}
-            {% if product.stock != 0 %}
-            <div class="product text-center mb-3 mr-3">
-                <div class="product-image" style="width: 300px;height: 500px;background-color: white; position:relative;">
-                    <img src="{{ product.image }}" style="
-                    width: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    margin:auto
-                ">
-                </div>
-                <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
-                    <a class="product-title h5 txt-dark" id="title" href="{{ url_for('product_info', product_id=product.product_id) }}">{{ product.name }}</a>
-                    <div class="rating d-flex flex-row justify-content-around">
-                        <div class="d-flex flex-row">
-                        {% for _ in range(product.average_rating) %}
-                            <p class="text-warning mr-1">&#9733;</p>
-                        {% endfor %}
-                        </div>
-                        <p class="text-info" style="text-shadow: 1px 1px 3px black">{{ product.num_reviews }} reviews</p>
+        <div class="d-flex flex-wrap flex-fill flex-column">
+            {% for category in categories %}
+                <h2>{{ category }}</h2>
+                <div class="d-flex mb-3">
+                {% for product in product_list %}
+                {% if product.category == category %}
+                {% if product.stock != 0 %}
+                <div class="product text-center mb-3 mr-3">
+                    <div class="product-image" style="width: 300px;height: 500px;background-color: white; position:relative;">
+                        <img src="{{ product.image }}" style="
+                        width: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        margin:auto
+                    ">
                     </div>
-                    <h4 class="price">${{ "%0.2f"|format(product.list_price) }}</h4>
-                    <form action="{{ url_for('add_to_cart') }}" method="post">
-                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
-                        <button type="submit" class="align-self-end add-to-cart p-3" >Add to Cart</button>
-                    </form>
+                    <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
+                        <a class="product-title h5 txt-dark" id="title" href="{{ url_for('product_info', product_id=product.product_id) }}">{{ product.name }}</a>
+                        <div class="rating d-flex flex-row justify-content-around">
+                            <div class="d-flex flex-row">
+                            {% for _ in range(product.average_rating) %}
+                                <p class="text-warning mr-1">&#9733;</p>
+                            {% endfor %}
+                            </div>
+                            <p class="text-info" style="text-shadow: 1px 1px 3px black">{{ product.num_reviews }} reviews</p>
+                        </div>
+                        <h4 class="price">${{ "%0.2f"|format(product.list_price) }}</h4>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                            <button type="submit" class="align-self-end add-to-cart p-3" >Add to Cart</button>
+                        </form>
+                    </div>
                 </div>
+                {% endif %}
+                {% endif %}
+            {% endfor %}
             </div>
-            {% endif %}
             {% endfor %}
         </div>
         {% endif %}
