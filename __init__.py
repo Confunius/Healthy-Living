@@ -754,16 +754,17 @@ for data in placeholder_data:
     db[product.product_id] = product
 else:
     product = Product(
-    data["product_id"],
-    data["name"],
+    data["courseId"],
+    data["videos"],
     None,
     None,
-    float(data["cost_price"]),
-    float(data["list_price"]),
-    data["stock"],
+    float(data["studentPurchaseList"]),
+    float(data["refundDescription"]),
+    data["courseContent"],
+    data["requirements"],
     data["description"],
-    data["image"],
-    data["category"],
+    data["courseForWho"],
+    data["instructor"],
     )
     db[product.product_id] = product
 db.close()
