@@ -12,23 +12,40 @@ Table of contents
 
 Responsibilities | *Wei Heng* | *Harold* | *Leroy* | *Delsius*
 --- | --- | --- | --- | ---
-Providing previous EcoFashion website | ✔️ | | |
-Subscription service of Courses | ✔️ | | |
+Provision of previous EcoFashion website with adjustments | ✔️ | | |
+Integration of Subscription service + subscription management with Courses | ✔️ | | |
+Additional Integration with Courses such as reviews, wishlist | ✔️ | | |
 Account Management of Teachers | | ✔️ | |
 Integration of Teachers and Students(Customer) with Courses | | ✔️ | |
-Course Viewing by Students(Customer) | | | ✔️|
-Course Creation GUI by Teacher | | | | ✔️
+Course Viewing for Students(Customer) | | | ✔️|
+Course Creation GUI for Teachers | | | | ✔️
 
 ## Technologies Used
-We use Flask for our backend, Bootstrap for styling, Jinja2 to link our Flask and HTML.
+We use Flask for our backend, Bootstrap for styling, Jinja2 to link our Flask and HTML. We also use Shelve as our database.
  - For the Subscription service, we use Stripe.
+ - For Automatic Emails in Account Creations, we use Sendgrid
+ - 
 
 ## Objects
 The object folder holds the python classes and shelves, which is neatly organized into folders of respective categories.
 
 ## Static
-The static folder holds the css, img and javascript assets. It is not used as much, and should be deleted once the CSS is fixed
+The static folder holds the css, img and javascript assets. It is not used as much, and should be deleted once the CSS is fixed.
 
 ## Templates
 The template folder holds all the HTML and Jinja2. Our Flask application will retrieve these HTML pages and route them properly.
 
+## To do list
+Tasks of Wei Heng | Tasks of Harold 
+--- | --- 
+Fix CSS of Account | Teacher registration form (optionally have a verification process)
+Integrate Admin and Customer properly | Teacher Profiles, which Teachers can add details about themselves, and automatically show all courses under them
+Develop UI to subscribe and manage their subscription | Role-based Access control to differentiate teacher and student accounts
+Documentation through README.md | Teacher Object creation, update, view and deletion
+
+Tasks of Leroy | Tasks of Delsius 
+--- | --- 
+Create Course Information page, similar to Product Information page | Design overall layout of GUI for course creation, including course sections.
+Create Input Form for teachers to enter their course details, including title, description, content and pricing | (optional) Implement file upload to add course materials
+Work with subscription to develop logic to grant students access to their courses | Allow Teachers to add Youtube links to their course, which displays as a integrated Youtube video within the course. Need to explore visibility options, to ensure students who didn't purchase the subscription cannot access the video through youtube.
+"" | Allow Teachers to add a page of contents, which is a page of text and images for Students to read.
