@@ -629,8 +629,12 @@ def courses():
         review_db.close()
     except:
         coursesList = []
+<<<<<<< HEAD
     #return redirect(url_for('onlineCourse', courseId=courseId))
     return render_template('/Customer/transaction/Course.html')
+=======
+    return redirect(url_for('product_info', courseId=course_Id))
+>>>>>>> 7ae5c627da0f8b196e6b9fb08ec2db26138b33f5
         
 
 
