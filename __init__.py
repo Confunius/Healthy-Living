@@ -115,6 +115,7 @@ def Login():
         email = create_user_form.userEmail.data
         password = create_user_form.userPassword.data
 
+        print(users_dict)
         for key, user_data in users_dict.items():
             if user_data.get_userEmail() == email and user_data.get_userPassword() == password:
                 if user_data.get_userVerified() == 1:
@@ -158,11 +159,15 @@ def Login():
     
         teachers_dict = db.get('teachers', {})
         print("Plz work 1")
+        print(teachers_dict)
 
         teacher_email = create_user_form.userEmail.data
         teacher_password = create_user_form.userPassword.data
 
+        print("Plz work 1.5")
+
         for key, teacher_data in teachers_dict.items():
+            print("Plz work 1.6")
             if teacher_data.get_teacherEmail() == teacher_email and teacher_data.get_teacherPassword() == teacher_password:
                 if teacher_data.get_teacherVerified() == 'deactivated':
                     #flask.flash("Your account has been deactivated. Please contact an administrator to reactivate your account.", category="danger")
@@ -180,7 +185,7 @@ def Login():
                     db.close()
                     """
                     print("Plz work 3")
-                    return redirect(url_for('thome'))
+                    return redirect(url_for('ahome'))
 
     print("pLZ work 4")
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
