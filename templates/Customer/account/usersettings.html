@@ -44,6 +44,10 @@
               <input type="text" class="form-control" name="username" value ="{{session['username']}}">
             </div>
             <div class="form-group">
+                <label for="userfullname">Role:</label>
+                <p>{{ session['user_role'] }}</p>
+              </div>
+            <div class="form-group">
               <label for="email">Email:</label>
               <input type="text" class="form-control" name="email" value ="{{session['useremail']}}">
             </div>

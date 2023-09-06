@@ -125,6 +125,7 @@ def Login():
                     session['useremail'] = user_data.get_userEmail()
                     session['useraddress'] = user_data.get_userAddress()
                     session['userpostalcode'] = user_data.get_userPostalCode()
+                    session['user_role'] = user_data.get_userRole()
                     session['user_logged_in'] = True
                     db.close()
 
@@ -636,7 +637,6 @@ def courses():
         coursesList = []
     #return redirect(url_for('onlineCourse', courseId=courseId))
     return render_template('/Customer/transaction/Course.html')
-        
 
 
 @app.route('/course/<course_id>')

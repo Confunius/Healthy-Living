@@ -43,6 +43,9 @@ class User:
 
     def get_userFullName(self):
         return self.__userFullName
+    
+    def get_userRole(self):
+        return self.__user_role
 
     def set_user_id(self, user_id):
         self.__user_id = user_id
