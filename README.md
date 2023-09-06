@@ -45,8 +45,8 @@ Documentation through README.md | Teacher Object creation, update, view and dele
 
 Tasks of Leroy | Tasks of Delsius 
 --- | --- 
-Create Course Information page, similar to Product Information page | Design overall layout of GUI for course creation, including course sections.
+Create Course Information page, similar to Product Information page | Design overall layout of GUI for course creation, including course sections, as well as saving all the course materials to a shelve file, which can be access by Leroy to display course materials
 Create Input Form for teachers to enter their course details, including title, description, content and pricing | (optional) Implement file upload to add course materials
-Work with subscription to develop logic to grant students access to their courses | Allow Teachers to add Youtube links to their course, which displays as a integrated Youtube video within the course. Need to explore visibility options, to ensure students who didn't purchase the subscription cannot access the video through youtube.
-Collaborate with Delsius to lighten his workload | Allow Teachers to add a page of contents, which is a page of text and images for Students to read.
- | Allow Teachers to create a MCQ Quiz.
+Display course sections and its contents as a sidebar | Allow Teachers to add Youtube links to their course. Need to explore visibility options, to ensure students who didn't purchase the subscription cannot access the video through youtube
+Retrieve the course materials from shelve to display Youtube links as a integration Youtube video within the course | Allow Teachers to add a articles, which is a page of text and images for Students to read
+Retrieve course materials to display articles and MCQ Quizzes | Allow Teachers to create a MCQ Quiz
