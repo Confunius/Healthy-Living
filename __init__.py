@@ -682,6 +682,105 @@ def course_info(course_id):
 
 
 
+#create course
+@app.route('/admin/courses')
+def product_admin():
+    course_list = []
+    course_dict = {}
+    db_path = 'Objects/transaction/course.db'
+    if not os.path.exists(db_path):
+        placeholder_data = [
+            {
+                "courseId": "C1",
+                "videos": "https://www.youtube.com/watch?v=XFjzTttyrv8",
+                "price": 15,
+                "studentPurchaseList": [],
+                "refundDescription": "30 days maximum",
+                "courseContent": { 
+                    'Basic Nutrition Module 1 - Getting started': {
+                        'video':'https://youtu.be/eVBWHnHEX6I?si=PWb9nw5dN0fztcZV',
+                        'article':'https://www.nutrition.gov/about-us#:~:text=Nutrition.gov%20is%20a%20USDA,and%20food%20safety%20for%20consumers',
+                        'quiz': {}
+                    },
+                    'What is Mental Health? Module 2': {
+                        'video':'https://www.youtube.com/embed/G0zJGDokyWQ?si=rKBjzmha55fR9Ov9',
+                        'article':'https://www.cdc.gov/mentalhealth/learn/index.htm',
+                        'quiz': {}
+                    }, 
+                    'Motivation and What Really Drives Human Behavior? Module 3': {
+                        'video':'https://www.youtube.com/watch?v=IhEcX3226pM',
+                        'article':'https://positivepsychology.com/motivation-human-behavior/',
+                        'quiz': {}
+                    },
+                    'How To Set SMART Goals for Better Health and Wellness? Module 4': {
+                        'video':'https://www.youtube.com/watch?v=IzuGj8hKGTc',
+                        'article':'https://www.noomii.com/articles/13906-smart-goal-method',
+                        'quiz': {}
+                    } 
+                 }
+                 "requirements": "Compulsory to attend at least one module",
+                 "description": "Here in this course, we will cover 2 different areas related to both the human body and the human mind! With 4 modules, this comprehensive course leaves no stone unturned! This course includes quizzes, videos and articles. introduction: 20 mins, module 1 : 30 mins, module 2 : 15 mins, module 3 : 25 mins, module 4 : 30 mins, total time taken: 2 hours"
+                 "courseForWho": "For anyone aged above 12 years old",
+                 "instructor": "Chen Wei Jie"
+                 
+            }
+
+        ]
+
+
+
+
+
+db = shelve.open(db_path, 'c')
+for data in placeholder_data:
+    product = Product(
+        data["product_id"],
+        data["name"],
+        data["color_options"],
+        data["size_options"],
+        float(data["cost_price"]),
+        float(data["list_price"]),
+        data["stock"],
+        data["description"],
+        data["image"],
+        data["category"],
+        )
+    db[product.product_id] = product
+else:
+    product = Product(
+    data["product_id"],
+    data["name"],
+    None,
+    None,
+    float(data["cost_price"]),
+    float(data["list_price"]),
+    data["stock"],
+    data["description"],
+    data["image"],
+    data["category"],
+    )
+    db[product.product_id] = product
+db.close()
+
+db = shelve.open(db_path, 'r')
+# open the db and retrieve the dictionary
+for key in db:
+    # key is product ID
+    product = db[key]
+    product_dict[key] = product
+db.close()
+for key in product_dict:
+    product = product_dict.get(key)
+    product_list.append(product)
+# prints out all the products and their info
+for product in product_list:
+    print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
+    print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
+return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
+
+
+
+
 @app.route('/review/<product_id>', methods=['POST'])
 def add_review(product_id):
     db_path = 'Objects/transaction/review.db'

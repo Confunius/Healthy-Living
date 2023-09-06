@@ -16,11 +16,12 @@ class onlineCourse:
         return {
             'courseId': self.courseId,
             'videos': self.videos,
+            'createdBy': self.createdBy,
+            'price': self.price,
             'studentPurchaseList': self.studentPurchaseList,
             'refundDescription': self.refundDescription,
             'courseContent': self.courseContent,
             'requirements': self.requirements,
-            'description': self.description,
             'description': self.description,
             'courseForWho': self.courseForWho,
             'instructor': self.instructor
