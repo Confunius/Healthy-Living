@@ -155,6 +155,29 @@ def Login():
                     session['admin_logged_in'] = True
                     db.close()
                     return redirect(url_for('ahome'))
+    
+        teachers_dict = db.get('teachers', {})
+
+        teacher_email = create_user_form.userEmail.data
+        teacher_password = create_user_form.userPassword.data
+
+        for key, teacher_data in teachers_dict.items():
+            if teacher_data.get_teacherEmail() == teacher_email and teacher_data.get_teacherPassword() == teacher_password:
+                if teacher_data.get_teacherVerified() == 'deactivated':
+                    #flask.flash("Your account has been deactivated. Please contact an administrator to reactivate your account.", category="danger")
+                    return render_template('/Customer/account/LoginPage.html', form=create_user_form)
+                else:
+                    session['id'] = key
+                    session['teacherfname'] = teacher_data.get_teacherFirstName()
+                    session['teacherlname'] = teacher_data.get_teacherLastName()
+                    session['teacherusername'] = teacher_data.get_teacherUserName()
+                    session['teacheremail'] = teacher_data.get_teacherEmail()
+                    session['teacherphonenumber'] = teacher_data.get_teacherPhoneNumber()
+                    session['teacher_logged_in'] = True
+                    db.close()
+                    #return redirect(url_for('thome'))
+                    print("Teacher successfully saved.")
+
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
@@ -189,7 +212,7 @@ def UserRegistrationPage():
 
         user = User(create_user_form.userFullName.data, create_user_form.userName.data, create_user_form.userPassword.data,
                              create_user_form.userEmail.data, create_user_form.userCfmPassword.data,
-                             create_user_form.userAddress.data, create_user_form.userPostalCode.data)
+                             create_user_form.userAddress.data, create_user_form.userPostalCode.data, create_user_form.userRole.data)
         print("User is created", user)
 
         users_dict[user.get_user_id()] = user #users_dict[3] = user // user_dict = {1:user, 3:user}
@@ -548,6 +571,58 @@ def product_info(product_id):
     return render_template('/Customer/transaction/ProductInfo.html', productobj=productobj,
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                               size_options=size_options, color_options=color_options, error_message=error_message)
+
+
+#for courses
+@app.route('/course')
+def courses():
+    coursesList = []
+    db_path = 'Objects/transaction/course.db'
+    review_db_path = 'Objects/transaction/review.db'
+
+    try:
+        db = shelve.open(db_path, 'r')
+        review_db = shelve.open(review_db_path, 'r')
+
+        # Get the filter options from request parameters
+        category_filter = request.args.get('category')
+        rating_filter = request.args.get('rating')
+
+        for key in db:
+            course = db[key]
+            course_reviews = [review for review in review_db.values(
+            ) if review.product_id == course.courseId]
+            num_reviews = len(course_reviews)
+
+            if num_reviews > 0:
+                total_rating = sum(review.rating for review in course_reviews)
+                average_rating = total_rating / num_reviews
+            else:
+                average_rating = 0
+
+            # Round the average_rating to display in stars
+            rounded_rating = round(average_rating)
+
+            # Add the average_rating and num_reviews to the product object
+            course.average_rating = rounded_rating
+            course.num_reviews = num_reviews
+
+            # Apply filters if they are selected
+            if category_filter and category_filter not in course.category:
+                continue
+
+            if rating_filter and int(rating_filter) > rounded_rating:
+                continue
+
+            coursesList.append(course)
+
+        db.close()
+        review_db.close()
+    except:
+        coursesList = []
+
+
+
 
 
 @app.route('/review/<product_id>', methods=['POST'])
@@ -1542,7 +1617,7 @@ app.jinja_env.filters['join_and'] = join_and_filter
 
 @app.route('/Teachers/CreateAccount')
 def teacher_createacc():
-    return "<h1>Create Account</h1>"
+    return render_template('/Teachers/teacherLoggedInHome.html')
 
 @app.route('/admin/product')
 def product_admin():

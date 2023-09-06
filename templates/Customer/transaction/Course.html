@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Courses</title>
+
+    {% extends "Customer/base.html" %}
+    {% block title %}Ecofashion Hub - Home{% endblock %}
+
+    {% block content %}
+
+    <style>
+        .product-title {
+            display: -webkit-box;
+            height:50px;
+            -webkit-line-clamp: 2; /* Number of lines to show */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+
+    <div class="d-flex flex-row">
+        <div class="filters pr-5 border-right" style="border-right-width: 5px!important;">
+            <h1>Filters</h1>
+            <h3>All Categories</h3>
+    
+
+        </div>
+    </div>
+
+    
+    {% endblock %}
+
+</body>
+</html>
