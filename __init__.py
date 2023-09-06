@@ -208,7 +208,7 @@ def UserRegistrationPage():
         userCfmPassword = create_user_form.userCfmPassword.data
         if not userPassword == userCfmPassword:
             # flash("Password and Confirm Password does not match.", category="danger")
-            return redirect("/CustomerRegistration")
+            return redirect("/UserRegistration")
 
         user = User(create_user_form.userFullName.data, create_user_form.userName.data, create_user_form.userPassword.data,
                              create_user_form.userEmail.data, create_user_form.userCfmPassword.data,
@@ -1733,40 +1733,69 @@ def product_admin():
         ]
         # stripe payment
         for product in placeholder_data:
-            for color in product["color_options"]:
-                for size in product["size_options"]:
-                    try:
-                        stripe_details = stripe.Product.create(
-                            name=f"{product['name']} | {color} | {size}",
-                            default_price_data={
-                                "unit_amount": int(product["list_price"] * 100),
-                                "currency": "sgd",
-                            },
-                            images=[product["image"]],
-                        )
-                        # stripe.Product.modify(
-                        #     stripe_details["id"],
-                        #     url=Domain+"/product/"+product["id"],
-                        # )
-                    except Exception as e:
-                        print(
-                            f"Failed to create product {product['product_id']}: {str(e)}")
+            # if the keys cost_price and list_price are in product.
+            print(list(product.keys()))
+            print("color_options" in list(product.keys()))
+            if "color_options" in list(product.keys()) and "size_options" in list(product.keys()):
+                for color in product["color_options"]:
+                    for size in product["size_options"]:
+                        try:
+                            stripe.Product.create(
+                                name=f"{product['name']} | {color} | {size}",
+                                default_price_data={
+                                    "unit_amount": int(product["list_price"] * 100),
+                                    "currency": "sgd",
+                                },
+                                images=[product["image"]],
+                            )
+                        except Exception as e:
+                            print(
+                                f"Failed to create product {product['product_id']}: {str(e)}")
+            else:
+                try:
+                    stripe.Product.create(
+                        name=product['name'],
+                        default_price_data={
+                            "unit_amount": int(product["list_price"] * 100),
+                            "currency": "sgd",
+                        },
+                        images=[product["image"]],
+                    )
+                except Exception as e:
+                    print(
+                        f"Failed to create product {product['product_id']}: {str(e)}")
 
         db = shelve.open(db_path, 'c')
-        for data in placeholder_data:
-            product = Product(
-                data["product_id"],
-                data["name"],
-                data["color_options"],
-                data["size_options"],
-                float(data["cost_price"]),
-                float(data["list_price"]),
-                data["stock"],
-                data["description"],
-                data["image"],
-                data["category"],
-            )
-            db[product.product_id] = product
+        if "color_options" in list(product.keys()) and "size_options" in list(product.keys()):
+            for data in placeholder_data:
+                product = Product(
+                    data["product_id"],
+                    data["name"],
+                    data["color_options"],
+                    data["size_options"],
+                    float(data["cost_price"]),
+                    float(data["list_price"]),
+                    data["stock"],
+                    data["description"],
+                    data["image"],
+                    data["category"],
+                )
+                db[product.product_id] = product
+        else:
+            for data in placeholder_data:
+                product = Product(
+                    data["product_id"],
+                    data["name"],
+                    None,
+                    None,
+                    float(data["cost_price"]),
+                    float(data["list_price"]),
+                    data["stock"],
+                    data["description"],
+                    data["image"],
+                    data["category"],
+                )
+                db[product.product_id] = product
         db.close()
 
     db = shelve.open(db_path, 'r')
