@@ -629,7 +629,7 @@ def courses():
         review_db.close()
     except:
         coursesList = []
-    return redirect(url_for('product_info', courseId=courseId))
+    return redirect(url_for('product_info', courseId=course_Id))
         
 
 
