@@ -437,6 +437,7 @@ def OrderStatus():
 @app.route('/OrderHistory')
 def OrderHistory():
     combined_list = []
+    products_for_order = []
 
     with shelve.open('Objects/transaction/order.db') as order_db:
         with shelve.open('Objects/transaction/product.db') as product_db:
