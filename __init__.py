@@ -47,7 +47,7 @@ Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SENDGRID_API_KEY'] = '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'
+app.config['SENDGRID_API_KEY'] = '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'
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
 app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
@@ -66,7 +66,7 @@ def send_verification_email(email):
     sg = sendgrid.SendGridAPIClient(api_key=app.config['SENDGRID_API_KEY'])
     verification_link = f"{Domain}verify_email?email={email}"
     message = Mail(
-        from_email=From('sam.bryant29@gmail.com'),
+        from_email=From('siiewweiheng@gmail.com'),
         to_emails=To(email),
         subject='Email Verification',
         html_content=f'Thank you for registering for our FashionHub membership.<br>If this was not done by you, please ignore this email.<br><br>Please click this to <a href="{verification_link}">verify</a> your account.<br><br>Best Regards,<br> FashionHub Accounts Department<br><img src="https://thumbs.dreamstime.com/z/sustainable-fashion-logo-eco-friendly-production-label-icon-badge-clothes-hanger-green-leaves-natural-recycling-215122758.jpg" width="120" height="120"></img>'
