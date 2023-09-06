@@ -33,6 +33,7 @@ class createUser(FlaskForm):
     userCfmPassword = PasswordField('Confirm Password: ', [EqualTo('userCfmPassword', message='Password do not match'), InputRequired()],  widget=PasswordInput(hide_value=False)) #validators=[validators.Length(min=8, max=16), validators.DataRequired()],
     userAddress = StringField('Address: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
     userPostalCode = StringField('Postal Code', validators=[validators.Length(min=6, max=6), validators.DataRequired()])
+    userRole = SelectField('Role', [validators.DataRequired()], choices=[('', 'Select'), ('customer', 'Customer'), ('teacher', 'Teacher')])
 
 class userLogin(Form):
     userEmail = EmailField('Email: ', [validators.DataRequired()])

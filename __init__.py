@@ -155,6 +155,29 @@ def Login():
                     session['admin_logged_in'] = True
                     db.close()
                     return redirect(url_for('ahome'))
+    
+        teachers_dict = db.get('teachers', {})
+
+        teacher_email = create_user_form.userEmail.data
+        teacher_password = create_user_form.userPassword.data
+
+        for key, teacher_data in teachers_dict.items():
+            if teacher_data.get_teacherEmail() == teacher_email and teacher_data.get_teacherPassword() == teacher_password:
+                if teacher_data.get_teacherVerified() == 'deactivated':
+                    #flask.flash("Your account has been deactivated. Please contact an administrator to reactivate your account.", category="danger")
+                    return render_template('/Customer/account/LoginPage.html', form=create_user_form)
+                else:
+                    session['id'] = key
+                    session['teacherfname'] = teacher_data.get_teacherFirstName()
+                    session['teacherlname'] = teacher_data.get_teacherLastName()
+                    session['teacherusername'] = teacher_data.get_teacherUserName()
+                    session['teacheremail'] = teacher_data.get_teacherEmail()
+                    session['teacherphonenumber'] = teacher_data.get_teacherPhoneNumber()
+                    session['teacher_logged_in'] = True
+                    db.close()
+                    #return redirect(url_for('thome'))
+                    print("Teacher successfully saved.")
+
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
@@ -189,7 +212,7 @@ def UserRegistrationPage():
 
         user = User(create_user_form.userFullName.data, create_user_form.userName.data, create_user_form.userPassword.data,
                              create_user_form.userEmail.data, create_user_form.userCfmPassword.data,
-                             create_user_form.userAddress.data, create_user_form.userPostalCode.data)
+                             create_user_form.userAddress.data, create_user_form.userPostalCode.data, create_user_form.userRole.data)
         print("User is created", user)
 
         users_dict[user.get_user_id()] = user #users_dict[3] = user // user_dict = {1:user, 3:user}

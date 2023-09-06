@@ -1,7 +1,7 @@
 # User class:
 class User:
     count_id = 0
-    def __init__(self,userFullName,userName,userPassword,userEmail, userCfmPassword, userAddress, userPostalCode, userVerified=0): # initializer method    def __init__(self, userName, userPassword, userEmail, userCfmEmail):
+    def __init__(self,userFullName,userName,userPassword,userEmail, userCfmPassword, userAddress, userPostalCode,userRole, userVerified=0): # initializer method    def __init__(self, userName, userPassword, userEmail, userCfmEmail):
         User.count_id += 1
         self.__user_id = User.count_id
         self.__userFullName = userFullName
@@ -12,6 +12,7 @@ class User:
         self.__userAddress = userAddress
         self.__userPostalCode = userPostalCode
         self.__userVerified = userVerified
+        self.__user_role = userRole
 
     def __repr__(self):
         return f'<User: {self.__userName}>'    # accessor methods
@@ -69,6 +70,9 @@ class User:
 
     def set_userFullName(self, userFullName):
         self.__userFullName = userFullName
+
+    def set_user_role(self, user_role):
+        self.__user_role = user_role
 
 class userPayment():
     def __init__(self, user_id,userFullName, userEmail, userCardName, userCardType, userCardNumber, userCardExp, userCardSec, userAddress, userPostalCode):  # initializer method    def __init__(self, userName, userPassword, userEmail, userCfmEmail):
@@ -142,4 +146,3 @@ class userPayment():
 
     def set_userPostalCode(self, userPostalCode):
         self.__userPostalCode = userPostalCode
-
