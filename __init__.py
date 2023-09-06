@@ -42,7 +42,6 @@ cartobj = Cart()
 wishlistobj = Wishlist()
 
 Domain = WeiHeng_Domain
-Domain = "http://127.0.0.1:5000/"
 Public_key = "6LdgM_8nAAAAAA5r2dkOXO5Fn3tnZaXPODjXLRMs"
 Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
