@@ -583,7 +583,7 @@ def product_info(product_id):
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
 # for courses
-@app.route('/course')
+@app.route('/course/<courseId>')
 def courses():
     coursesList = []
     db_path = 'Objects/transaction/course.db'
