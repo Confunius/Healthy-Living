@@ -40,6 +40,7 @@ Tasks of Wei Heng | Tasks of Harold
 --- | --- 
 Fix CSS of Account | Teacher registration form (optionally have a verification process)
 Integrate Admin and Customer properly | Teacher Profiles, which Teachers can add details about themselves, and automatically show all courses under them
+Develop products related to courses | ""
 Develop UI to subscribe and manage their subscription | Role-based Access control to differentiate teacher and student accounts
 Documentation through README.md | Teacher Object creation, update, view and deletion
 Help with Courses to lighten their workload | Help with Courses to lighten their workload 
