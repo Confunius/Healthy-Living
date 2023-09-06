@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 import requests
 import sendgrid
 from sendgrid.helpers.mail import Mail, From, To
-from flask_wtf.recaptcha import RecaptchaField
+#from flask_wtf.recaptcha import RecaptchaField
 from markupsafe import Markup
 
 # current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -51,7 +51,7 @@ app.config['SENDGRID_API_KEY'] = 'SG.vA022Ld1QbqX3M9gehaW6w.Vac5x8eSXaEnAylRJB3X
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
 app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
-app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
+#app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
 
 
 # Replace with your own secret key
@@ -577,7 +577,12 @@ def product_info(product_id):
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
+<<<<<<< HEAD
 # for courses
+=======
+
+#for courses
+>>>>>>> ef2f338 (WIP: Fixing recaptcha bug)
 @app.route('/course')
 def courses():
     coursesList = []
@@ -624,6 +629,8 @@ def courses():
         review_db.close()
     except:
         coursesList = []
+    return redirect(url_for('product_info', courseId=course_Id))
+        
 
 
 
@@ -2190,5 +2197,4 @@ if get_faqs_from_shelve() == '':
 # Teacher
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__':    app.run(debug=True)
