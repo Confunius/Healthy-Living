@@ -550,6 +550,58 @@ def product_info(product_id):
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
 
+#for courses
+@app.route('/course')
+def courses():
+    coursesList = []
+    db_path = 'Objects/transaction/course.db'
+    review_db_path = 'Objects/transaction/review.db'
+
+    try:
+        db = shelve.open(db_path, 'r')
+        review_db = shelve.open(review_db_path, 'r')
+
+        # Get the filter options from request parameters
+        category_filter = request.args.get('category')
+        rating_filter = request.args.get('rating')
+
+        for key in db:
+            course = db[key]
+            course_reviews = [review for review in review_db.values(
+            ) if review.product_id == course.courseId]
+            num_reviews = len(course_reviews)
+
+            if num_reviews > 0:
+                total_rating = sum(review.rating for review in course_reviews)
+                average_rating = total_rating / num_reviews
+            else:
+                average_rating = 0
+
+            # Round the average_rating to display in stars
+            rounded_rating = round(average_rating)
+
+            # Add the average_rating and num_reviews to the product object
+            course.average_rating = rounded_rating
+            course.num_reviews = num_reviews
+
+            # Apply filters if they are selected
+            if category_filter and category_filter not in course.category:
+                continue
+
+            if rating_filter and int(rating_filter) > rounded_rating:
+                continue
+
+            coursesList.append(course)
+
+        db.close()
+        review_db.close()
+    except:
+        coursesList = []
+
+
+
+
+
 @app.route('/review/<product_id>', methods=['POST'])
 def add_review(product_id):
     db_path = 'Objects/transaction/review.db'
