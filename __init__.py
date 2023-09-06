@@ -629,14 +629,55 @@ def courses():
         review_db.close()
     except:
         coursesList = []
-<<<<<<< HEAD
     #return redirect(url_for('onlineCourse', courseId=courseId))
     return render_template('/Customer/transaction/Course.html')
-=======
-    return redirect(url_for('product_info', courseId=course_Id))
->>>>>>> 7ae5c627da0f8b196e6b9fb08ec2db26138b33f5
         
 
+
+@app.route('/course/<course_id>')
+def course_info(course_id):
+    error = request.args.get('error')
+    error_message=None
+    if error == "stock_limit_exceeded":
+        error_message = "You've exceeded the available stock for this product."
+    elif error == "product_alr_in_wishlist":
+        error_message = "Product already in wishlist."
+
+    review_list = []
+    pdb_path = 'Objects/transaction/course.db'
+    db_path = 'Objects/transaction/review.db'
+
+    try:
+        pdb = shelve.open(pdb_path, 'r')
+        if course_id in pdb.keys():
+            productobj = pdb[course_id]
+        pdb.close()
+    except:
+        productobj = None
+
+    try:
+        db = shelve.open(db_path, 'r')
+        for key in db:
+            review = db[key]
+            if review.product_id == course_id:
+                review_list.append(review)
+
+        db.close()
+    except:
+        review_list = []
+
+    # Calculate average rating
+    total_rating = sum(review.rating for review in review_list)
+    total_reviews = len(review_list)
+    average_rating = total_rating / total_reviews if total_reviews > 0 else 0
+
+    # Round the average rating up to the nearest whole number
+    rounded_rating = round(average_rating)
+
+
+    return render_template('/Customer/transaction/Course.html', productobj=productobj,
+                            review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
+                            error_message=error_message)
 
 
 
