@@ -11,6 +11,9 @@
     {% block content %}
 
     <style>
+        *{
+            background:#4b6043;
+        }
         .product-title {
             display: -webkit-box;
             height:50px;
@@ -19,7 +22,76 @@
             overflow: hidden;
         }
     </style>
-
+    <nav class="navbar navbar-expand-sm">
+        <!-- Brand -->
+        <div class="container-fluid d-flex flex-row justify-content-start">
+          <div class="p-2">
+            <img title="logo" src="https://blog.oxfamintermon.org/wp-content/uploads/2016/11/moda-ecol%C3%B3gica-1.jpg"
+          width="80" height="80" style="border-radius:50%">
+          </div>
+          <div class="p-2">
+            <a class="navbar-brand text-light" href="/">EcoFashion Hub</a>
+          </div>
+          <!-- Links -->
+          <div class="flex-fill p-2">
+            <ul class="navbar-nav list-group justify-content-end">
+              <li class="nav-item list-group-item">
+                <a class="nav-link a text-light" href="/">Our Home</a>
+              </li>
+              <li class="nav-item list-group-item">
+                <a class="nav-link text-light" href="/product">Products</a>
+              </li>
+              <li class="nav-item list-group-item">
+                <a class="nav-link text-light" href="/course">Courses</a>
+              </li>
+              <li class="nav-item list-group-item">
+                <a class="nav-link text-light" href="/sustainability">Sustainability</a>
+              </li>
+      
+              <!-- Dropdown -->
+              <li class="nav-item dropdown list-group-item">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbardrop" data-toggle="dropdown">
+                  Customer Service
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/CustomerService">Customer Service</a>
+                  <a class="dropdown-item" href="/ServiceRecord">Service Records</a>
+                  <a class="dropdown-item" href="/FAQ">FAQ</a>
+                </div>
+              </li>
+      
+              <li class="nav-item list-group-item d-flex flew-row">
+                <a class="nav-link" href="/cart"><i class="fa-solid fa-lg fa-shopping-cart" style="color:black"></i></a>
+                <text>{{ num_items_in_cart }}</text>
+              </li>
+              {% if session['user_logged_in'] %}
+              <li class="nav-item dropdown list-group-item">
+                  <a class="nav-link dropdown-toggle text-light" href="#" id="navbardrop" data-toggle="dropdown">
+                    <i class="fa-solid fa-lg fa-user" style="color:black"></i>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="{{ url_for('UserProfile')}}">Profile</a>
+                      <a class="dropdown-item" href="{{ url_for('Logout')}}">Logout</a>
+                  </div>
+              </li>
+                {% else %}
+                <li class="nav-item list-group-item">
+                  <a class="nav-link text-light" href="/Login" >Login</a>
+                </li>
+                {% endif %}
+              </li>
+              <li class="nav-item list-group-item d-flex flex-row">
+                <a class="nav-link" href="/"><i class="fa-solid fa-lg fa-heart" style="color:black"></i></a>
+                <text>{{ num_items_in_wishlist }}</text>
+              </li>
+              <li class="nav-item list-group-item">
+                <a class="nav-link" href="/"><i class="fa-solid fa-lg fa-magnifying-glass" style="color:black"></i></a>
+              </li>
+            </ul>
+          </div>
+          </div>
+        </nav>
+      
     <div class="d-flex flex-row">
         <div class="filters pr-5 border-right" style="border-right-width: 5px!important;">
             <h1>Filters</h1>
