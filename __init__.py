@@ -1551,42 +1551,109 @@ def product_admin():
     db_path = 'Objects/transaction/product.db'
     if not os.path.exists(db_path):
         placeholder_data = [
-
             {
                 "product_id": "P1",
-                "name": "Men 100% Cotton Linen Long Sleeve Shirt",
-                "color_options": ["White", "Green"],
-                "size_options": ["M", "L"],
-                "cost_price": 8,
-                "list_price": 16,
-                "stock": 3,
-                "description": "Introducing the \"Men 100% Cotton Linen Long Sleeve Shirt\"! Crafted with the finest blend of cotton and linen, this classic white shirt boasts both style and comfort. Perfect for casual outings or semi-formal occasions, its long sleeves add an air of sophistication to any ensemble. The breathable fabric ensures you stay cool and relaxed all day long. Embrace a timeless, versatile look with this essential wardrobe piece that pairs effortlessly with jeans, chinos, or tailored trousers. Designed to exude elegance and confidence, this shirt is a must-have for every fashion-forward gentleman. Get ready to make a lasting impression.",
-                "image": "https://m.media-amazon.com/images/I/615Cby-DciL._AC_SX679_.jpg",
-                "category": "Men's Casual"
+                "name": "Women's Tri-Blend T-Shirt",
+                "color_options": ["Red", "Black"],
+                "size_options": ["S", "M"],
+                "cost_price": 15,
+                "list_price": 25,
+                "stock": 54,
+                "description": "Elevate your workout style with our Women’s Tri-Blend T-Shirt. Crafted for both comfort and performance, this shirt is a must-have for fitness enthusiasts. Its soft, breathable fabric ensures you stay cool during your workouts, while the flattering design keeps you looking chic. Priced at just $25, it's an affordable addition to your fitness wardrobe.",
+                "image": "https://m.media-amazon.com/images/I/81NkOeFp8yL._AC_SL1500_.jpg",
+                "category": "Fitness Apparel"
             },
             {
                 "product_id": "P2",
-                "name": "Women Organic Dye Casual Jacket",
-                "color_options": ["White", "Blue"],
-                "size_options": ["S", "L"],
-                "cost_price": 14,
-                "list_price": 18,
-                "stock": 5,
-                "description": "Women Organic Dye Casual Jacket! Elevate your style with this eco-friendly \"Women Organic Dye Casual Jacket.\" Crafted with organic dyes and sustainably sourced materials, this jacket embodies a perfect blend of fashion and environmental consciousness. The soft and breathable fabric ensures comfort without compromising on style. Its pristine white color complements any outfit, making it a versatile addition to your wardrobe. Embrace the essence of modern femininity as you step out in this chic jacket, designed to make a statement at casual gatherings or outings with friends. Embrace sustainability with flair and inspire others to do the same.",
-                "image": "https://m.media-amazon.com/images/I/81mrNU4gF3L._AC_SX569_.jpg",
-                "category": "Women's Casual"
+                "name": "Men's Tri-Blend T Shirt",
+                "color_options": ["Grey", "White"],
+                "size_options": ["M", "L"],
+                "cost_price": 15,
+                "list_price": 25,
+                "stock": 45,
+                "description": "Introducing our Men’s Tri-Blend T-Shirt - the perfect fusion of style and functionality. Priced at $25, this shirt offers unbeatable value for your fitness attire. With its premium fabric and comfortable fit, it's your go-to choice for workouts and beyond.",
+                "image": "https://m.media-amazon.com/images/I/61lU+iSVXQL._AC_SY741_.jpg",
+                "category": "Fitness Apparel"
             },
             {
                 "product_id": "P3",
-                "name": "Women Tank Top 100% Recycled Fibers",
-                "color_options": ["White", "Red"],
-                "size_options": ["S", "M"],
-                "cost_price": 6,
-                "list_price": 12,
-                "stock": 2,
-                "description": "Women Tank Top 100% Recycled Fibers! Embrace a greener lifestyle with our \"Women Tank Top 100% Recycled Fibers.\" Made from environmentally friendly materials, this white tank top not only enhances your workout performance but also reduces your carbon footprint. The soft and stretchable fabric provides a comfortable and supportive fit, making it ideal for any active lifestyle. Whether you're hitting the gym, going for a run, or practicing yoga, this tank top ensures you stay cool and dry throughout your workout. Embrace sustainability without compromising on style, and let this tank top be a reflection of your commitment to a healthier planet.",
-                "image": "https://m.media-amazon.com/images/I/61a9kY47XPL._AC_SX679_.jpg",
-                "category": "Women's Sportswear"
+                "name": "Motivational 1L Sports Water Bottle",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 13,
+                "description": "Stay hydrated and motivated with our Motivational 1L Sports Water Bottle. With inspiring quotes to fuel your fitness journey, this bottle is your constant companion. Priced affordably, it's a reminder to keep pushing towards your goals.",
+                "image": "https://m.media-amazon.com/images/I/81sRIW9C0xL._AC_SL1500_.jpg",
+                "category": "Fitness Apparel"
+            },
+            {
+                "product_id": "P4",
+                "name": "OPTIMUM NUTRITION Gold Standard 100% Whey Protein Powder 2LB",
+                "cost_price": 60,
+                "list_price": 75,
+                "stock": 30,
+                "description": "Fuel your muscles with the best - OPTIMUM NUTRITION Gold Standard Whey Protein. With 24 grams of protein per serving, it's the gold standard for muscle recovery and growth. Get it now and maximize your fitness gains.",
+                "image": "https://m.media-amazon.com/images/I/61TKrit75mL._AC_SL1500_.jpg",
+                "category": "Nutritional Supplements"
+            },
+            {
+                "product_id": "P5",
+                "name": "OPTIMUM NUTRITION Micronized Create Monohydrate Powder, Unflavored, Keto Friendly, 1.32LB",
+                "cost_price": 65,
+                "list_price": 80,
+                "stock": 25,
+                "description": "Boost your workout performance with OPTIMUM NUTRITION Creatine Monohydrate. This unflavored, keto-friendly powder is a game-changer for strength and endurance. Elevate your fitness regimen with this essential supplement.",
+                "image": "https://m.media-amazon.com/images/I/71kQRMrkPdL._AC_SL1500_.jpg",
+                "category": "Nutritional Supplements"
+            },
+            {
+                "product_id": "P6",
+                "name": "Gratitude: A Day and Night Reflection Journal (90 Days)",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 13,
+                "description": "A Day and Night Reflection Journal will help you center your day around positive feelings and gratitude. It’s the perfect place to record and celebrate anything that you are grateful for and to preserve important memories. This 90-day journal gives you a path to creating a habit of daily gratitude that you can carry with you throughout your life. Cultivating gratitude is one of the most potent and important mindfulness exercises, and thankfulness has proven to have a positive effect on a person's mental health and general well-being.<br>Each page of the journal includes space to record expressions of gratitude, personal affirmations, memories of positive interactions, and commentaries on the significance of it all. The journal is intended for those who want to foster deep reflection as well as for those who simply want to discover the effects of thankfulness. Having filled the journal with statements of gratitude, you will end up with a personal trove of wonderful reflections, which can be a source of positive inspiration at any time.",
+                "image": "https://m.media-amazon.com/images/I/71TDknMziYL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P7",
+                "name": "SMART Goal Journal",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 52,
+                "description": "Achieve your fitness goals with our SMART Goal Journal. Set specific, measurable, attainable, relevant, and time-bound goals. Stay on track and watch your progress soar.",
+                "image": "https://m.media-amazon.com/images/I/313fVsC25oL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P8",
+                "name": "Nutrition Logbook",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 132,
+                "description": "Track your nutrition with our Nutrition Logbook. Whether you're counting macros or simply eating mindfully, this logbook is your tool for nutritional success.",
+                "image": "https://m.media-amazon.com/images/I/710XGSnEAzL.jpg",
+                "category": "Wellness Journal"
+            },
+            {
+                "product_id": "P9",
+                "name": "FLYBIRD Adjustable Dumbbells, 25/30/50/55lb",
+                "cost_price": 150,
+                "list_price": 250,
+                "stock": 23,
+                "description": "Transform your home into a personal gym with FLYBIRD Adjustable Dumbbells. These versatile weights allow you to tailor your workouts to your fitness level. Say goodbye to expensive gym memberships.",
+                "image": "https://m.media-amazon.com/images/I/71T31CPFA+L._AC_SL1500_.jpg",
+                "category": "Home Gym"
+            },
+            {
+                "product_id": "P10",
+                "name": "Wall Mounted - Pullup Bar",
+                "cost_price": 10,
+                "list_price": 15,
+                "stock": 25,
+                "description": "Take your upper body strength to new heights with our Wall Mounted Pull-up Bar. Easy to install at home, it's the perfect addition to your fitness space. Get ready to conquer those pull-ups.",
+                "image": "https://m.media-amazon.com/images/I/41SJeg-B01L._AC_SL1024_.jpg",
+                "category": "Home Gym"
             },
         ]
         # stripe payment
