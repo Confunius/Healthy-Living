@@ -583,7 +583,7 @@ def product_info(product_id):
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
 # for courses
-@app.route('/course/<courseId>')
+@app.route('/course')
 def courses():
     coursesList = []
     db_path = 'Objects/transaction/course.db'
@@ -629,7 +629,8 @@ def courses():
         review_db.close()
     except:
         coursesList = []
-    return redirect(url_for('product_info', courseId=courseId))
+    #return redirect(url_for('onlineCourse', courseId=courseId))
+    return render_template('/Customer/transaction/Course.html')
         
 
 
