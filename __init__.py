@@ -739,16 +739,17 @@ def product_admin():
 db = shelve.open(db_path, 'c')
 for data in placeholder_data:
     product = Product(
-        data["product_id"],
-        data["name"],
-        data["color_options"],
-        data["size_options"],
-        float(data["cost_price"]),
-        float(data["list_price"]),
-        data["stock"],
+        data["courseId"],
+        data["videos"],
+        data["createdBy"],
+        data["price"],
+        float(data["studentPurchaseList"]),
+        float(data["refundDescription"]),
+        data["courseContent"],
+        data["requirements"],
         data["description"],
-        data["image"],
-        data["category"],
+        data["courseForWho"],
+        data["instructor"],
         )
     db[product.product_id] = product
 else:
