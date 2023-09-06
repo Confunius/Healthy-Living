@@ -1542,7 +1542,7 @@ app.jinja_env.filters['join_and'] = join_and_filter
 
 @app.route('/Teachers/CreateAccount')
 def teacher_createacc():
-    return "<h1>Create Account</h1>"
+    return render_template('/Teachers/teacherLoggedInHome.html')
 
 @app.route('/admin/product')
 def product_admin():
