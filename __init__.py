@@ -47,7 +47,7 @@ Private_key = "6LdgM_8nAAAAADidEavxieoxm7ivfa8mdcP5bdRc"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SENDGRID_API_KEY'] = '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'
+app.config['SENDGRID_API_KEY'] = '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'
 app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
 app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
@@ -686,13 +686,19 @@ def add_to_cart():
     db = shelve.open(db_path, 'r')
     product = db.get(product_id)
     default_quantity = 1
-    default_color = product.color_options[0]
-    default_size = product.size_options[0]
+    default_color = None
+    default_size = None
+    if product.color_options != [] or product.size_options != []:
+        default_color = product.color_options[0]
+        default_size = product.size_options[0]
     db.close()
 
     quantity = int(request.form.get('quantity', default_quantity))
-    size = request.form.get('size', default_size)
-    color = request.form.get('color', default_color)
+    size = default_size
+    color = default_color
+    if product.color_options != [] or product.size_options != []:     
+        size = request.form.get('size', default_size)
+        color = request.form.get('color', default_color)
 
     # Fetch the current quantity of the product in the cart
     current_quantity_in_cart = 0
@@ -831,11 +837,19 @@ def display_payment():
     db_file = 'Objects/transaction/promo.db'
     allow_promo = os.path.isfile(db_file)
     for item in cart_items:
-        line_item = {
-            'price': find_product(item.name, item.color, item.size)["default_price"],
-            'quantity': item.quantity,
-            'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
-        }
+        print(item.name, find_product(item.name)[0])
+        if item.color != None and item.size != None:
+            line_item = {
+                'price': find_product(item.name, item.color, item.size)["default_price"],
+                'quantity': item.quantity,
+                'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
+            }
+        else:
+            line_item = {
+                'price': find_product(item.name)[0]["default_price"],
+                'quantity': item.quantity,
+                'adjustable_quantity': {"enabled": True, "minimum": 1, "maximum": 99},
+            }
 
         line_items.append(line_item)
     try:
@@ -1770,8 +1784,9 @@ def product_admin():
                         f"Failed to create product {product['product_id']}: {str(e)}")
 
         db = shelve.open(db_path, 'c')
-        if "color_options" in list(product.keys()) and "size_options" in list(product.keys()):
-            for data in placeholder_data:
+        for data in placeholder_data:
+            if "color_options" in list(data.keys()) and "size_options" in list(data.keys()):
+
                 product = Product(
                     data["product_id"],
                     data["name"],
@@ -1785,19 +1800,18 @@ def product_admin():
                     data["category"],
                 )
                 db[product.product_id] = product
-        else:
-            for data in placeholder_data:
+            else:
                 product = Product(
-                    data["product_id"],
-                    data["name"],
-                    None,
-                    None,
-                    float(data["cost_price"]),
-                    float(data["list_price"]),
-                    data["stock"],
-                    data["description"],
-                    data["image"],
-                    data["category"],
+                data["product_id"],
+                data["name"],
+                None,
+                None,
+                float(data["cost_price"]),
+                float(data["list_price"]),
+                data["stock"],
+                data["description"],
+                data["image"],
+                data["category"],
                 )
                 db[product.product_id] = product
         db.close()
@@ -1812,6 +1826,10 @@ def product_admin():
     for key in product_dict:
         product = product_dict.get(key)
         product_list.append(product)
+    # prints out all the products and their info
+    for product in product_list:
+        print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
+        print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
     return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
 
 
