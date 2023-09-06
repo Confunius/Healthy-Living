@@ -572,8 +572,7 @@ def product_info(product_id):
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                               size_options=size_options, color_options=color_options, error_message=error_message)
 
-'
-'
+
 #for courses
 @app.route('/course')
 def courses():
@@ -621,6 +620,8 @@ def courses():
         review_db.close()
     except:
         coursesList = []
+    return redirect(url_for('product_info', courseId=course_Id))
+        
 
 
 
@@ -2140,5 +2141,4 @@ if get_faqs_from_shelve() == '':
 # Teacher
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__':    app.run(debug=True)
