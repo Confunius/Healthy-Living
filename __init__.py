@@ -35,7 +35,7 @@ from Objects.account.Forms import DelimitedNumberInput, createUser, userLogin, u
 
 
 WeiHeng_Domain = "https://congenial-disco-5g444v96pv537v7x-5000.app.github.dev/"
-# WeiHeng_Domain = "http://127.0.0.1:5000/"
+WeiHeng_Domain = "http://127.0.0.1:5000/"
 Public_key = ""
 Private_key = ""
 
@@ -183,7 +183,7 @@ def Login():
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
-@app.route('/Teachers/CreateAccount')
+@app.route('/Teachers/CreateAccount', methods=['GET', 'POST'])
 def TeacherHomepage():
     return render_template('/Teachers/teacherLoggedInHome.html')
 
@@ -227,10 +227,11 @@ def UserRegistrationPage():
         db['users'] = users_dict #put everything back
         db.close()
         send_verification_email(create_user_form.userEmail.data)
-        flash('A verification email has been sent. Please check your inbox.', category='success')
-        #session["email_success"] = "A verification email has been sent. Please check your inbox."
+        #flash('A verification email has been sent. Please check your inbox.', category='success')
+        session["email_success"] = "A verification email has been sent. Please check your inbox."
         #time.sleep(2)
-        return redirect("/Login")
+        #return redirect("/Login")
+        return "<script>alert('A verification email has been sent. Please check your inbox.');window.location.href='/Login';</script>"
     return render_template('/Customer/account/CustomerRegistration.html', form=create_user_form)
 
 @app.route('/EditCustomerAccount/<int:id>/', methods=['GET', 'POST']) #refer to usersettings "href"
