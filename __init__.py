@@ -927,7 +927,8 @@ def course_admin():
     for course in course_list:
         print(course.courseId, course.videos, course.price, course.name, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
         print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "\n", "Course Price: ", course.price, "\n", "Course Name", course.name, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
-    return render_template('/Teachers/teacherLoggedInHome.html', course=course_list, count=len(course_list))
+    course_form = createCourse(request.form)
+    return render_template('/Teachers/teacherLoggedInHome.html', course=course_list, count=len(course_list), form=course_form)
 
 
 #688 - 822
