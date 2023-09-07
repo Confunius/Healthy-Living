@@ -205,6 +205,7 @@ def add_course():
                               create_course_form.courseContent.data, create_course_form.requirements.data,
                                 create_course_form.description.data, create_course_form.courseForWho.data, 
                                 create_course_form.instructor.data)
+        print("dATA", create_course_form.courseId.data, create_course_form.name.data)
         print("Course is created", course)
         print("Course Name", course.name)
         course_list = []
@@ -212,9 +213,13 @@ def add_course():
             course_list.append(course_dict[key])
             print(course_list)
         db.close()
-        return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=create_course_form)
+        for course in course_list:
+            print("Course Name", course.name)
+            print("Course ID", course.courseId)
+            print("Course Price", course.price)
+        return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=course_list, form=create_course_form)
 
-    return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=create_course_form)
+    return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=course_list, form=create_course_form)
 
 @app.route('/')
 def CustomerHomepage():
