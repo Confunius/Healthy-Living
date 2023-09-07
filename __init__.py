@@ -229,8 +229,9 @@ def UserRegistrationPage():
         send_verification_email(create_user_form.userEmail.data)
         #flash('A verification email has been sent. Please check your inbox.', category='success')
         session["email_success"] = "A verification email has been sent. Please check your inbox."
-        time.sleep(2)
-        return redirect("/Login")
+        #time.sleep(2)
+        #return redirect("/Login")
+        return "<script>alert('A verification email has been sent. Please check your inbox.');window.location.href='/Login';</script>"
     return render_template('/Customer/account/CustomerRegistration.html', form=create_user_form)
 
 @app.route('/EditCustomerAccount/<int:id>/', methods=['GET', 'POST']) #refer to usersettings "href"
