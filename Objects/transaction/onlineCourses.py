@@ -1,9 +1,10 @@
 class onlineCourse:
-    def __init__(self, courseId, videos, createdBy, price, studentPurchaseList, refundDescription, courseContent, requirements, description, courseForWho, instructor):
+    def __init__(self, courseId, videos, createdBy, price, image, studentPurchaseList, refundDescription, courseContent, requirements, description, courseForWho, instructor):
         self.courseId = courseId
         self.videos = videos
         self.createdBy = createdBy
         self.price = price
+        self.image = image
         self.studentPurchaseList = studentPurchaseList if studentPurchaseList else []
         self.refundDescription = refundDescription
         self.courseContent = courseContent
@@ -18,6 +19,7 @@ class onlineCourse:
             'videos': self.videos,
             'createdBy': self.createdBy,
             'price': self.price,
+            'image': self.image,
             'studentPurchaseList': self.studentPurchaseList,
             'refundDescription': self.refundDescription,
             'courseContent': self.courseContent,
@@ -26,5 +28,7 @@ class onlineCourse:
             'courseForWho': self.courseForWho,
             'instructor': self.instructor
         }
+    
+
         
         
