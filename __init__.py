@@ -111,7 +111,14 @@ def Logout():
 def Login():
     create_user_form = userLogin(request.form)
     if request.method == "POST" and create_user_form.validate():
-        db = shelve.open('Objects/account/user.db', 'r')
+        user_db_path = 'Objects/account/user.db'
+        if not os.path.exists(user_db_path):
+            print("we have no user.db")
+            db = shelve.open(user_db_path, 'c')
+            db['users'] = {}
+            db['admins'] = {}
+            db.close()
+        db = shelve.open(user_db_path, 'w')
         users_dict = db.get('users', {})  # Use a default empty dict if 'users' doesn't exist yet
 
         email = create_user_form.userEmail.data
@@ -142,6 +149,15 @@ def Login():
                     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
         admin_dict = db.get('admins', {})
+        print(admin_dict)
+        if admin_dict == {}:
+            print("we have an empty admin_dict")
+            admin = Admin("admin", "admin", "admin", "admin", "siiewweiheng@gmail.com", "admin", "12345678")
+            print("admin is created", admin.get_adminEmail(), admin.get_adminPassword())
+            users_dict[admin.get_admin_id()] = admin #users_dict[3] = user // user_dict = {1:user, 3:user}
+            db['admins'] = users_dict #put everything back
+            db.close()
+
         # Handle admin login here (similar to user login)
         admin_email = create_user_form.userEmail.data #It doesn't matter as it is borrowing the fields not the
                                                     #corresponding assigned "variable" in forms.py Programming essential
