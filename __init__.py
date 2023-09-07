@@ -192,12 +192,12 @@ def add_course():
     create_course_form = createCourse(request.form)
     if request.method == "POST":
         db = shelve.open('Objects/transaction/course.db', 'c')
-        course_dict = {}
-        try:
-            course_dict = db['course']
-        except:
-            db["course"] = course_dict
-            print("Error in retrieving course from course.db")
+        # course_dict = {}
+        # try:
+        #     course_dict = db['course']
+        # except:
+        #     db["course"] = course_dict
+        #     print("Error in retrieving course from course.db")
 
         course = onlineCourse(create_course_form.courseId.data, create_course_form.name.data, create_course_form.videos.data, 
                               create_course_form.price.data, create_course_form.image.data, 
@@ -205,21 +205,25 @@ def add_course():
                               create_course_form.courseContent.data, create_course_form.requirements.data,
                                 create_course_form.description.data, create_course_form.courseForWho.data, 
                                 create_course_form.instructor.data)
-        print("dATA", create_course_form.courseId.data, create_course_form.name.data)
-        print("Course is created", course)
-        print("Course Name", course.name)
+        db[course.courseId] = course
+        # print("dATA", create_course_form.courseId.data, create_course_form.name.data)
+        # print("Course is created", course)
+        # print("Course Name", course.name)
         course_list = []
-        for key in course_dict:
-            course_list.append(course_dict[key])
+        for key in db.keys():
+            print("keys: ", key)
+            print("values: ", db[key])
+            course_list.append(db[key])
             print(course_list)
+        
         db.close()
         for course in course_list:
             print("Course Name", course.name)
             print("Course ID", course.courseId)
             print("Course Price", course.price)
-        return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=course_list, form=create_course_form)
+        return render_template('/Teachers/teacherLoggedInHome.html', course_list=course_list, form=create_course_form)
 
-    return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=course_list, form=create_course_form)
+    return render_template('/Teachers/teacherLoggedInHome.html', course_list=course_list, form=create_course_form)
 
 @app.route('/')
 def CustomerHomepage():
@@ -715,7 +719,7 @@ def courses():
     except:
         coursesList = []
     #return redirect(url_for('onlineCourse', courseId=courseId))
-    return render_template('/Customer/transaction/Course.html')
+    return render_template('/Customer/transaction/Course.html', course_list=coursesList, count=len(coursesList))
 
 
 @app.route('/course/<course_id>')
@@ -770,7 +774,6 @@ def course_admin():
     course_dict = {}
     db_path = 'Objects/transaction/course.db'
     if not os.path.exists(db_path):
-        
         placeholder_data = [
             {
                 "courseId": "C1",
@@ -880,12 +883,11 @@ def course_admin():
         for data in placeholder_data:
             course = onlineCourse(
                 data["courseId"],
-                data["videos"],
                 data["name"],
-                #data["createdBy"],
-                data["image"],
+                data["videos"],
                 data["price"],
-                float(data["studentPurchaseList"]),
+                data["image"],
+                data["studentPurchaseList"],
                 data["refundDescription"],
                 data["courseContent"],
                 data["requirements"],
@@ -894,41 +896,20 @@ def course_admin():
                 data["instructor"],
                 )
             db[course.courseId] = course
-        else:
-            course = onlineCourse(
-            data["courseId"],
-            data["videos"],
-            data["name"],
-            #data["createdBy"],
-            data["image"],
-            data["price"],
-            float(data["studentPurchaseList"]),
-            data["refundDescription"],
-            data["courseContent"],
-            data["requirements"],
-            data["description"],
-            data["courseForWho"],
-            data["instructor"],
-            )
-            db[course.courseId] = course
         db.close()
 
+    course_list = []
     db = shelve.open(db_path, 'r')
     # open the db and retrieve the dictionary
-    for key in db:
-        # key is product ID
-        course = db[key]
-        course_dict[key] = course
+    for course_id, course_obj in db.items():
+        course_list.append(course_obj)
     db.close()
-    for key in course_list:
-        course = course_dict.get(key)
-        course_list.append(product)
     # prints out all the products and their info
     for course in course_list:
         print(course.courseId, course.videos, course.price, course.name, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
         print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "\n", "Course Price: ", course.price, "\n", "Course Name", course.name, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
     course_form = createCourse(request.form)
-    return render_template('/Teachers/teacherLoggedInHome.html', course=course_list, count=len(course_list), form=course_form)
+    return render_template('/Teachers/teacherLoggedInHome.html', course_list=course_list, count=len(course_list), form=course_form)
 
 
 #688 - 822

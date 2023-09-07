@@ -33,13 +33,12 @@
             <th scope="col">Course Instructor</th>
             <th scope="col">Course Requirements</th>
             <th scope="col">Course Image</th>
-            <th scope="col">Actions</th>
           </tr>
         </thead>
         <!-- Loop through courses and display them in the table -->
-        {% for course in onlineCourse %}
+        {% for course in course_list %}
         <tbody>
-          <tr>
+          <tr class="bgd-light">
             <th scope="row">{{ course.courseId }}</th>
             <td>{{ course.name }}</td>
             <td>{{ course.description }}</td>

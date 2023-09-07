@@ -92,7 +92,7 @@
           {% else %}
           {% endif %}
           <div class="d-flex flex-wrap flex-fill">
-              {% for course in coursesList %}
+              {% for course in course_list %}
               
               {% if course.stock != 0 %}
               <div class="product text-center mb-3 mr-3">
@@ -108,19 +108,19 @@
                   </div>
                   <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
                       <a class="product-title h5 txt-dark" id="title" href="{{ url_for('course_info', courseId=course.courseId) }}">{{ course.name }}</a>
-                      <div class="rating d-flex flex-row justify-content-around">
+                      <!-- <div class="rating d-flex flex-row justify-content-around">
                           <div class="d-flex flex-row">
                           {% for _ in range(product.average_rating) %}
                               <p class="text-warning mr-1">&#9733;</p>
                           {% endfor %}
                           </div>
                           <p class="text-info" style="text-shadow: 1px 1px 3px black">{{ product.num_reviews }} reviews</p>
-                      </div>
-                      <h4 class="price">${{ "%0.2f"|format(product.list_price) }}</h4>
-                      <form action="{{ url_for('add_to_cart') }}" method="post">
+                      </div> -->
+                      <h4 class="price">${{ "%0.2f"|format(course.price) }}</h4>
+                      <!-- <form action="{{ url_for('add_to_cart') }}" method="post">
                           <input type="hidden" name="courseId" value="{{ course.courseId }}">
                           <button type="submit" class="align-self-end add-to-cart p-3" >Add to Cart</button>
-                      </form>
+                      </form> -->
                   </div>
               </div>
           </div>
