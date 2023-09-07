@@ -662,12 +662,9 @@ def course_info(course_id):
                             review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
                             error_message=error_message)
 
-
-
-
 #create course
 @app.route('/admin/courses')
-def product_admin():
+def course_admin():
     course_list = []
     course_dict = {}
     db_path = 'Objects/transaction/course.db'
@@ -700,27 +697,36 @@ def product_admin():
                         'article':'https://www.noomii.com/articles/13906-smart-goal-method',
                         'quiz': {}
                     } 
-                 }
+                 },
                  "requirements": "Compulsory to attend at least one module",
-                 "description": "Here in this course, we will cover 2 different areas related to both the human body and the human mind! With 4 modules, this comprehensive course leaves no stone unturned! This course includes quizzes, videos and articles. introduction: 20 mins, module 1 : 30 mins, module 2 : 15 mins, module 3 : 25 mins, module 4 : 30 mins, total time taken: 2 hours"
+                 "description": "Here in this course, we will cover 2 different areas related to both the human body and the human mind! With 4 modules, this comprehensive course leaves no stone unturned! This course includes quizzes, videos and articles. introduction: 20 mins, module 1 : 30 mins, module 2 : 15 mins, module 3 : 25 mins, module 4 : 30 mins, total time taken: 2 hours",
                  "courseForWho": "For anyone aged above 12 years old",
-                 "instructor": "Chen Wei Jie"
-                 
+                 "instructor": "Chen Wei Jie"     
             }
-
         ]
 
-
-
-
-
-db = shelve.open(db_path, 'c')
-for data in placeholder_data:
-    product = Product(
+    db = shelve.open(db_path, 'c')
+    for data in placeholder_data:
+        product = Product(
+            data["courseId"],
+            data["videos"],
+            data["createdBy"],
+            data["price"],
+            float(data["studentPurchaseList"]),
+            float(data["refundDescription"]),
+            data["courseContent"],
+            data["requirements"],
+            data["description"],
+            data["courseForWho"],
+            data["instructor"],
+            )
+        db[product.product_id] = product
+    else:
+        product = Product(
         data["courseId"],
         data["videos"],
-        data["createdBy"],
-        data["price"],
+        None,
+        None,
         float(data["studentPurchaseList"]),
         float(data["refundDescription"]),
         data["courseContent"],
@@ -729,39 +735,24 @@ for data in placeholder_data:
         data["courseForWho"],
         data["instructor"],
         )
-    db[product.product_id] = product
-else:
-    product = Product(
-    data["courseId"],
-    data["videos"],
-    None,
-    None,
-    float(data["studentPurchaseList"]),
-    float(data["refundDescription"]),
-    data["courseContent"],
-    data["requirements"],
-    data["description"],
-    data["courseForWho"],
-    data["instructor"],
-    )
-    db[product.product_id] = product
-db.close()
+        db[product.product_id] = product
+    db.close()
 
-db = shelve.open(db_path, 'r')
-# open the db and retrieve the dictionary
-for key in db:
-    # key is product ID
-    product = db[key]
-    product_dict[key] = product
-db.close()
-for key in product_dict:
-    product = product_dict.get(key)
-    product_list.append(product)
-# prints out all the products and their info
-for product in product_list:
-    print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
-    print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
-return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
+    db = shelve.open(db_path, 'r')
+    # open the db and retrieve the dictionary
+    for key in db:
+        # key is product ID
+        product = db[key]
+        product_dict[key] = product
+    db.close()
+    for key in product_dict:
+        product = product_dict.get(key)
+        product_list.append(product)
+    # prints out all the products and their info
+    for product in product_list:
+        print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
+        print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
+    return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
 
 
 
