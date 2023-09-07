@@ -809,7 +809,6 @@ def course_admin():
 
 
 
-
 @app.route('/review/<product_id>', methods=['POST'])
 def add_review(product_id):
     db_path = 'Objects/transaction/review.db'
