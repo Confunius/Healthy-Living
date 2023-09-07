@@ -14,6 +14,7 @@ import sendgrid
 from sendgrid.helpers.mail import Mail, From, To
 #from flask_wtf.recaptcha import RecaptchaField
 from markupsafe import Markup
+from flask_sqlalchemy import SQLAlchemy
 
 # current_dir = os.path.dirname(os.path.abspath(__file__))
 # main_dir = os.path.dirname(current_dir)
@@ -30,6 +31,7 @@ from Objects.CustomerService.Record import Record
 from Objects.account.Admin import Admin
 from Objects.account.Customer import User
 from Objects.account.Forms import DelimitedNumberInput, createUser, createCourse, userLogin, userEditInfo, userChangePassword, userPaymentMethod, createAdmin, adminLogin, editAdminAccount
+#from Objects.blog.blog import Post, Comments, Likes
 
 # sys.path.remove(main_dir)
 
@@ -53,7 +55,6 @@ app.secret_key = 'your_secret_key_here'  # Replace with your own secret key
 app.config['RECAPTCHA_PUBLIC_KEY'] = Public_key
 app.config['RECAPTCHA_PRIVATE_KEY'] = Private_key
 #app.config['RECAPTCHA_VERIFY_URL'] = 'https://www.google.com/recaptcha/api/siteverify'
-
 
 # Replace with your own secret key
 stripe.api_key = 'sk_test_51NbJAUL0EO5j7e8js0jOonkCjFkHksaoITSyuD8YR34JLHMBkX3Uy4SwejTVr6XAvL8amqm4kMjmXtedg2I1oNTI00wnaqFYJJ'
