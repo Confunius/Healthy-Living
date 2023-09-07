@@ -425,6 +425,13 @@ def PaymentMethod(id):
 
 @app.route('/UserHomepage')
 def UserHomepage():
+    if not os.path.exists(user_db_path):
+        print("we have no user.db")
+        db = shelve.open(user_db_path, 'c')
+        db['users'] = {}
+        db['admins'] = {}
+        db.close()
+        
     return render_template('/Customer/homepage.html')
 # Account
 @app.route('/UserProfile')
