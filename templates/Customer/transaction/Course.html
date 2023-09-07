@@ -28,6 +28,7 @@
         }
         
     </style>
+</head>
     
       
     <div class="d-flex flex-row">
@@ -56,12 +57,12 @@
           <div class="search mb-3">
               <input class="form-control bgd-light" id="search" placeholder="Search" type="text">
           </div>
-          {% if product_list|length == 0 %}
+          {% if coursesList|length == 0 %}
           <h1 class="text-center">No courses found</h1>
           {% else %}
           <div class="d-flex flex-wrap flex-fill">
-              {% for product in product_list %}
-              {% if product.stock != 0 %}
+              {% for course in coursesList %}
+              {% if course.stock != 0 %}
               <div class="product text-center mb-3 mr-3">
                   <div class="product-image" style="width: 300px;height: 500px;background-color: white; position:relative;">
                       <img src="{{ product.image }}" style="
@@ -97,7 +98,7 @@
       </div>
   </div>
 
-    
+
     {% endblock %}
 
 </body>
