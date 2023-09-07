@@ -66,7 +66,7 @@
     <div class="d-flex flex-row">
       <div class="filters pr-5 border-right" style="border-right-width: 5px!important;">
           <h1>Filters</h1>
-          <h3>All Categories</h3>
+          <!-- <h3>All Categories</h3>
           <ul>
               <li><a class="txt-light" href="{{ url_for('products') }}">All</a></li>
 
@@ -79,7 +79,7 @@
               <li class="text-warning"><a class="d-flex text-warning" href="{{ url_for('products', rating='3') }}"><p class="mr-1 mb-0">&#9733;</p><p class="mr-1 mb-0">&#9733;</p><p class="mr-1 mb-0">&#9733;</p> & up</a></li>
               <li class="text-warning"><a class="d-flex text-warning" href="{{ url_for('products', rating='2') }}"><p class="mr-1 mb-0">&#9733;</p><p class="mr-1 mb-0">&#9733;</p> & up</a></li>
               <li class="text-warning"><a class="d-flex text-warning" href="{{ url_for('products', rating='1') }}"><p class="mr-1 mb-0">&#9733;</p> & up</a></li>
-          </ul>
+          </ul> -->
       </div>
 
 
@@ -107,7 +107,7 @@
                   ">
                   </div>
                   <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
-                      <a class="product-title h5 txt-dark" id="title" href="{{ url_for('course_info', courseId=course.courseId) }}">{{ course.name }}</a>
+                      <a class="product-title h5 txt-dark" id="title" href="{{ url_for('course_info', course_id=course.courseId) }}">{{ course.name }}</a>
                       <!-- <div class="rating d-flex flex-row justify-content-around">
                           <div class="d-flex flex-row">
                           {% for _ in range(product.average_rating) %}
