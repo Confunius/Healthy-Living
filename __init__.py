@@ -232,7 +232,7 @@ def CustomerHomepage():
 
 @app.route('/blog')
 def Blog():
-    return render_template('/Admin/blog.html')
+    return render_template('/Customer/blog.html')
 
 @app.route('/UserRegistrationPage', methods=['GET', 'POST'])
 def UserRegistrationPage():
