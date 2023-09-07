@@ -29,7 +29,7 @@ from Objects.transaction.wishlist import Wishlist, WishlistItem
 from Objects.CustomerService.Record import Record
 from Objects.account.Admin import Admin
 from Objects.account.Customer import User
-from Objects.account.Forms import DelimitedNumberInput, createUser, userLogin, userEditInfo, userChangePassword, userPaymentMethod, createAdmin, adminLogin, editAdminAccount
+from Objects.account.Forms import DelimitedNumberInput, createUser, createCourse, userLogin, userEditInfo, userChangePassword, userPaymentMethod, createAdmin, adminLogin, editAdminAccount
 
 # sys.path.remove(main_dir)
 
@@ -183,9 +183,38 @@ def Login():
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
-@app.route('/Teachers/CreateAccount', methods=['GET', 'POST'])
+@app.route('/Teachers/CreateAccount')
 def TeacherHomepage():
     return render_template('/Teachers/teacherLoggedInHome.html')
+
+@app.route('/teacher/add_course', methods=['GET', 'POST'])
+def add_course():
+    create_course_form = createCourse(request.form)
+    if request.method == "POST":
+        db = shelve.open('Objects/transaction/course.db', 'c')
+        course_dict = {}
+        try:
+            course_dict = db['course']
+        except:
+            db["course"] = course_dict
+            print("Error in retrieving course from course.db")
+
+        course = onlineCourse(create_course_form.courseId.data, create_course_form.name.data, create_course_form.videos.data, 
+                              create_course_form.price.data, create_course_form.image.data, 
+                              create_course_form.studentPurchaseList.data, create_course_form.refundDescription.data, 
+                              create_course_form.courseContent.data, create_course_form.requirements.data,
+                                create_course_form.description.data, create_course_form.courseForWho.data, 
+                                create_course_form.instructor.data)
+        print("Course is created", course)
+        print("Course Name", course.name)
+        course_list = []
+        for key in course_dict:
+            course_list.append(course_dict[key])
+            print(course_list)
+        db.close()
+        return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=create_course_form)
+
+    return render_template('/Teachers/teacherLoggedInHome.html', onlineCourse=create_course_form)
 
 @app.route('/')
 def CustomerHomepage():
