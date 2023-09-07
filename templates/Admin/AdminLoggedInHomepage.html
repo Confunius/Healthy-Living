@@ -1,12 +1,7 @@
-{% extends "Admin/adminbase.html" %}
+{% extends "Admin/whbase.html" %}
 {% block title %}Healthy Living - Customer Home{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders Visualization</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -14,9 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 bgd-light txt-dark">
     <h2>Orders Visualization</h2>
-    <canvas id="ordersChart" width="400" height="200"></canvas>
+    <canvas id="ordersChart"></canvas>
 </div>
 
 <script>
