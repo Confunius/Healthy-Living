@@ -2446,8 +2446,7 @@ faqs = [
                     "No, we prioritize your security. We do not store any sensitive payment details on our servers. Some customers may opt for tokenized storage through our payment gateways for easier checkouts in the future via link authentication, but this is entirely voluntary.",
                     "We're sorry, but we only ship to Singapore for the time being. We may expand to international borders in the future, thank you for your support!"]
 
-    }
-]
+    } ]
 if get_faqs_from_shelve() == '':
     save_faqs_to_shelve(faqs)
 
