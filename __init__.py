@@ -14,7 +14,7 @@ import sendgrid
 from sendgrid.helpers.mail import Mail, From, To
 #from flask_wtf.recaptcha import RecaptchaField
 from markupsafe import Markup
-from flask_sqlalchemy import SQLAlchemy
+
 
 # current_dir = os.path.dirname(os.path.abspath(__file__))
 # main_dir = os.path.dirname(current_dir)
