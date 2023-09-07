@@ -21,6 +21,7 @@ from markupsafe import Markup
 # sys.path.append(main_dir)
 # Importing Objects
 from Objects.transaction.Product import Product  # it does work
+from Objects.transaction.onlineCourses import onlineCourse
 from Objects.transaction.Order import Order
 from Objects.transaction.Review import Review
 from Objects.transaction.code import Code
@@ -474,7 +475,7 @@ def products():
         rating_filter = request.args.get('rating')
 
         for key in db:
-            product = db[key]
+            product = db[key] #retrieve a COPY of data at key (raise KeyError if no such key) 
             product_reviews = [review for review in review_db.values(
             ) if review.product_id == product.product_id]
             num_reviews = len(product_reviews)
@@ -707,52 +708,52 @@ def course_admin():
 
     db = shelve.open(db_path, 'c')
     for data in placeholder_data:
-        product = Product(
+        course = onlineCourse(
             data["courseId"],
             data["videos"],
             data["createdBy"],
             data["price"],
             float(data["studentPurchaseList"]),
-            float(data["refundDescription"]),
+            data["refundDescription"],
             data["courseContent"],
             data["requirements"],
             data["description"],
             data["courseForWho"],
             data["instructor"],
             )
-        db[product.product_id] = product
+        db[course.courseId] = course
     else:
-        product = Product(
+        course = onlineCourse(
         data["courseId"],
         data["videos"],
         None,
         None,
         float(data["studentPurchaseList"]),
-        float(data["refundDescription"]),
+        data["refundDescription"],
         data["courseContent"],
         data["requirements"],
         data["description"],
         data["courseForWho"],
         data["instructor"],
         )
-        db[product.product_id] = product
+        db[course.courseId] = course
     db.close()
 
     db = shelve.open(db_path, 'r')
     # open the db and retrieve the dictionary
     for key in db:
         # key is product ID
-        product = db[key]
-        product_dict[key] = product
+        course = db[key]
+        course_dict[key] = course
     db.close()
-    for key in product_dict:
-        product = product_dict.get(key)
-        product_list.append(product)
+    for key in course_list:
+        course = course_dict.get(key)
+        course_list.append(product)
     # prints out all the products and their info
-    for product in product_list:
-        print(product.product_id, product.name, product.color_options, product.size_options, product.cost_price, product.list_price, product.stock, product.description, product.image, product.category)
-        print("Product_ID: ", product.product_id, "\n", "Product Name: ", product.name, "\n", "Color Options: ", product.color_options, "\n", "Size Options: ", product.size_options, "\n", "Cost Price: ", product.cost_price, "\n", "List Price: ", product.list_price, "\n", "Stock: ", product.stock, "\n", "Description: ", product.description, "\n", "Image: ", product.image, "\n", "Category: ", product.category, "\n")
-    return render_template('/Admin/transaction/product.html', product_list=product_list, count=len(product_list))
+    for course in course_list:
+        print(course.courseId, course.videos, course.createdBy, course.price, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
+        print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "Created By: ", course.createdBy, "\n", "Course Price: ", course.price, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
+    return render_template('/Admin/transaction/Course.html', course=course_list, count=len(course_list))
 
 
 
