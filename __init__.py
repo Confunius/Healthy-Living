@@ -673,7 +673,7 @@ def course_admin():
     course_dict = {}
     db_path = 'Objects/transaction/course.db'
     if not os.path.exists(db_path):
-        #placeholder_data["courseContent"]
+        
         placeholder_data = [
             {
                 "courseId": "C1",
@@ -778,12 +778,28 @@ def course_admin():
             }
         ]
 
-    db = shelve.open(db_path, 'c')
-    for data in placeholder_data:
-        course = onlineCourse(
+        db = shelve.open(db_path, 'c')
+        for data in placeholder_data:
+            course = onlineCourse(
+                data["courseId"],
+                data["videos"],
+                #data["createdBy"],
+                data["image"],
+                data["price"],
+                float(data["studentPurchaseList"]),
+                data["refundDescription"],
+                data["courseContent"],
+                data["requirements"],
+                data["description"],
+                data["courseForWho"],
+                data["instructor"],
+                )
+            db[course.courseId] = course
+        else:
+            course = onlineCourse(
             data["courseId"],
             data["videos"],
-            data["createdBy"],
+            #data["createdBy"],
             data["image"],
             data["price"],
             float(data["studentPurchaseList"]),
@@ -794,24 +810,8 @@ def course_admin():
             data["courseForWho"],
             data["instructor"],
             )
-        db[course.courseId] = course
-    else:
-        course = onlineCourse(
-        data["courseId"],
-        data["videos"],
-        data["createdBy"],
-        data["image"],
-        data["price"],
-        float(data["studentPurchaseList"]),
-        data["refundDescription"],
-        data["courseContent"],
-        data["requirements"],
-        data["description"],
-        data["courseForWho"],
-        data["instructor"],
-        )
-        db[course.courseId] = course
-    db.close()
+            db[course.courseId] = course
+        db.close()
 
     db = shelve.open(db_path, 'r')
     # open the db and retrieve the dictionary
@@ -825,9 +825,9 @@ def course_admin():
         course_list.append(product)
     # prints out all the products and their info
     for course in course_list:
-        print(course.courseId, course.videos, course.createdBy, course.price, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
-        print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "Created By: ", course.createdBy, "\n", "Course Price: ", course.price, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
-    return render_template('/Admin/transaction/Course.html', course=course_list, count=len(course_list))
+        print(course.courseId, course.videos, course.price, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
+        print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "\n", "Course Price: ", course.price, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
+    return render_template('/Teachers/teacherLoggedInHome.html', course=course_list, count=len(course_list))
 
 
 #688 - 822
