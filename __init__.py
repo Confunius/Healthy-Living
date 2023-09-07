@@ -180,7 +180,9 @@ def CustomerHomepage():
 
     return render_template('/Customer/homepage.html')
 
-
+@app.route('/blog')
+def Blog():
+    return render_template('/Admin/blog.html')
 
 @app.route('/UserRegistrationPage', methods=['GET', 'POST'])
 def UserRegistrationPage():
@@ -769,8 +771,8 @@ def course_admin():
         course = onlineCourse(
         data["courseId"],
         data["videos"],
-        None,
-        None,
+        data["createdBy"],
+        data["price"],
         float(data["studentPurchaseList"]),
         data["refundDescription"],
         data["courseContent"],
