@@ -43,13 +43,23 @@
     }
     .modal {
         position: absolute;
+        margin-left:auto;
+        margin-right:auto;
     }
     .modal-left {
         margin: 30px;
+        text-align:center;
+        margin-left:auto;
+        margin-right:auto;
     }
     .modal-right {
         margin: 30px;
-        float: right;
+        text-align:center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .modal-content{
+        width:100%;
     }
     .formdesign{
       background:greenyellow;
@@ -132,14 +142,16 @@
     <p>Here in this course, we will cover 2 different areas related to both the human body and the human mind!</p>
     <ol>
       <li>Fundamentals of Nutrition & Exercise</li>
+      <li>
       <ol>
         <li>Module 1 - Introduction to Nutrition</li>
+        <div type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal1" id="b1">Introduction to Nutrition</div>
         <li>Module 2 - Exercise Essentials</li>
       </ol>
+      </li>
       <div class="clearfix"></div>
       <!-- Button trigger modal -->
-      <div type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal1" id="b1">Launch Left Modal</div>
-      <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modal2" id="b2">Launch Right Modal</button>
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal2" id="b2">Exercise Essentials</button>
       <!-- Modal 1 -->
       <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
           <div class="modal-dialog modal-sm modal-left">
@@ -148,10 +160,18 @@
                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
   
                       </button>
-                       <h4 class="modal-title" id="modal1Label">Left Modal title</h4>
+                       <h4 class="modal-title" id="modal1Label">Introduction to Nutrition</h4>
   
                   </div>
-                  <div class="modal-body">Some Demo For Modal 1</div>
+                  <div class="modal-body">
+                    <p>Estimated time of completion: 30 mins</p>
+                    <p>This module offers an introduction to nutrition, the science of how food nourishes the body. Proper nutrition is essential for optimal health and disease prevention. This module covers the basics of nutrition, including nutrient requirements, food sources, and recommendations.</p>
+
+                    <p>You will learn about the different macronutrients - carbohydrates, protein, and fats - and their roles in the body. You will also study micronutrients, including vitamins and minerals, which are essential for various bodily functions. The module also explores the role of water in hydration and overall health.</p>
+                    
+                    <p>In addition to covering the science of nutrition, this module includes practical advice for healthy eating. You will learn how to read nutrition labels, make informed food choices, and plan balanced meals. With this knowledge, you can take control of your diet and make choices that will benefit your health and well-being.</p>
+
+                    </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
@@ -166,10 +186,19 @@
                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
   
                       </button>
-                       <h4 class="modal-title" id="modal2Label">Right Modal title</h4>
+                       <h4 class="modal-title" id="modal2Label">Exercise Essentials</h4>
   
                   </div>
-                  <div class="modal-body">Some Demo For Modal 2</div>
+                  <div class="modal-body">
+                    <p>Estimated time of completion: 15 mins</p> 
+
+                    <p>Exercise is not just physical, but it also plays an important role in mental health. By incorporating exercise into our daily routine, it can significantly benefit our psychological health. Exercise Essentials' mental health module covers various aspects of how exercise can boost one's mood, help alleviate depression and anxiety, and improve overall well-being.</p>
+                    
+                    <p>Exercise Essentials details how regular exercise stimulates the brain and enhances cognitive abilities. Moreover, it explores the benefits of physical activity on reducing stress and regulating mood by releasing endorphins, the natural mood-boosting chemicals in our body. Providing the resources and knowledge available to individuals who may be struggling with their mental health, Exercise Essentials insightfully guides readers about the way exercise can naturally help manage depressive and anxious moods.</p>
+                    
+                    <p>In summary, Exercise Essentials' Mental Health module is an informative guide for individuals looking to improve or maintain good mental health through the power of exercise. It delves into the psychological and physical health benefits exercise provides, promotes a well-rounded understanding of mental health management while actively supporting, encouraging, and providing the tools for a healthy self-going forward.</p>
+
+                    </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
@@ -177,14 +206,16 @@
           </div>
       </div>
       <li>Psychology</li>
+      <li>
       <ol>
         <li>Module 3 - Understanding Motivation</li>
+        <div type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal1" id="b1">Understanding Motivation</div>
         <li>Module 4 - Effective Goal Setting</li>
       </ol>
+      </li>
       <div class="clearfix"></div>
       <!-- Button trigger modal -->
-      <div type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal1" id="b1">Launch Left Modal</div>
-      <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#modal2" id="b2">Launch Right Modal</button>
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal2" id="b2">Effective Goal Setting</button>
       <!-- Modal 1 -->
       <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
           <div class="modal-dialog modal-sm modal-left">
@@ -193,10 +224,16 @@
                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
   
                       </button>
-                       <h4 class="modal-title" id="modal1Label">Left Modal title</h4>
+                       <h4 class="modal-title" id="modal1Label">Understanding Motivation</h4>
   
                   </div>
-                  <div class="modal-body">Some Demo For Modal 1</div>
+                  <div class="modal-body">
+                    <p>Estimated time of completion: 25 mins</p>
+                    <p>The Understanding Motivation module is a comprehensive guide that explores the different types of motivation and how to use it to achieve success. The module provides practical examples and strategies to help individuals improve their motivation and maintain it in the long term. It emphasizes the importance of understanding intrinsic motivation and provides tactics to create an environment that fosters it.</p>
+
+                    <p>The module aims to teach individuals how to take control of their motivation, enabling them to stay focused, achieve their goals, and lead successful lives. In addition to providing strategies on how to improve motivation, the module offers tips on how to overcome setbacks that could impact motivation. By the end of the module, individuals will have a better understanding of how motivation affects their personal and professional lives, and possess strategies to stay motivated towards achieving success.</p>
+
+                </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
@@ -211,10 +248,18 @@
                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
   
                       </button>
-                       <h4 class="modal-title" id="modal2Label">Right Modal title</h4>
+                       <h4 class="modal-title" id="modal2Label">Effective Goal Setting</h4>
   
                   </div>
-                  <div class="modal-body">Some Demo For Modal 2</div>
+                  <div class="modal-body">
+                    <p>Estimated time of completion: 30 mins</p>
+                    <p>The Effective Goal Settings module provides an in-depth guide on setting goals and achieving them with greater success. It covers various aspects of goal setting such as identifying and defining goals, creating a plan to achieve them, and maintaining momentum to stay on track. The module provides practical examples and strategies to help individuals set effective goals and achieve them efficiently.</p>
+
+                    <p>The module emphasizes the importance of setting SMART goals; Specific, Measurable, Achievable, Relevant, and Time-bound. It explains how creating a plan with these elements will provide direction and focus, and help individuals remain motivated when achieving their targets. The module also provides tips on overcoming common obstacles that may hinder individuals from achieving their goals.</p>
+
+                    <p>By the end of the module, individuals will have gained practical skills and knowledge on setting and achieving effective goals. They will understand the importance of SMART goals and how to create a clear plan towards achieving them. With these skills, individuals will be better equipped to take charge of their personal and professional lives and lead successful, fulfilling futures.</p>
+
+                    </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
