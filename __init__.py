@@ -180,7 +180,9 @@ def CustomerHomepage():
 
     return render_template('/Customer/homepage.html')
 
-
+@app.route('/Blog')
+def Blog():
+    return render_template('/Admin/blog.html')
 
 @app.route('/UserRegistrationPage', methods=['GET', 'POST'])
 def UserRegistrationPage():
