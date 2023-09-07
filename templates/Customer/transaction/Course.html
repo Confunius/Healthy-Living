@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Courses</title>
-
-    {% extends "Customer/base.html" %}
+{% extends "Customer/base.html" %}
     {% block title %}Healthy Living - Courses{% endblock %}
 
     {% block content %}
-    <!-- Bootstrap 4.5.2 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
     <style>
         /**{
             background:#4b6043;
@@ -77,9 +67,7 @@
           <h3>All Categories</h3>
           <ul>
               <li><a class="txt-light" href="{{ url_for('products') }}">All</a></li>
-              {% for category in categories %}
-              <li><a class="txt-light" href="{{ url_for('products', category=category) }}">{{ category }}</a></li>
-              {% endfor %}
+
           </ul>
           <h3>Ratings</h3>
           <ul>
@@ -100,6 +88,7 @@
           {% if onlineCourse|length == 0 %}
           <h1 class="text-center">No courses found</h1>
           {% else %}
+          {% endif %}
           <div class="d-flex flex-wrap flex-fill">
               {% for course in coursesList %}
               
@@ -132,10 +121,9 @@
                       </form>
                   </div>
               </div>
-              
-              {% endfor %}
           </div>
           {% endif %}
+          {% endfor %}
       </div>
   </div>
   <h1>Courses</h1>
@@ -322,6 +310,3 @@
     </div>
 
     {% endblock %}
-
-</body>
-</html>
