@@ -183,7 +183,7 @@ def Login():
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
 
-@app.route('/Teachers/CreateAccount')
+@app.route('/Teachers/CreateAccount', methods=['GET', 'POST'])
 def TeacherHomepage():
     return render_template('/Teachers/teacherLoggedInHome.html')
 
