@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, g, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, g, send_file, flash
 import shelve
 # import dbm.gnu
 import sys
@@ -7,7 +7,6 @@ import os
 from datetime import datetime, timedelta
 import time
 import stripe
-import flash
 from dataclasses import dataclass, field
 # sys.path.remove(main_dir)
 import requests
@@ -212,7 +211,9 @@ def UserRegistrationPage():
         db['users'] = users_dict #put everything back
         db.close()
         send_verification_email(create_user_form.userEmail.data)
-        #flash('A verification email has been sent. Please check your inbox.', category='success')
+        flash('A verification email has been sent. Please check your inbox.', category='success')
+        #session["email_success"] = "A verification email has been sent. Please check your inbox."
+        #time.sleep(2)
         return redirect("/Login")
     return render_template('/Customer/account/CustomerRegistration.html', form=create_user_form)
 
