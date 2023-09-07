@@ -1,2 +1,29 @@
 {% extends "Teachers/teacherbase.html" %}
 {% block title %}Ecofashion Hub - Teacher Home{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Welcome, {{session['username']}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">Your Courses</h2>
+    </div>
+  </div>
+  <div class="row">
+    {% for course in courses %}
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{course['course_name']}}</h5>
+          <p class="card-text">{{course['course_description']}}</p>
+          <a href="/viewCourse/{{course['course_id']}}" class="btn btn-primary">View Course</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
