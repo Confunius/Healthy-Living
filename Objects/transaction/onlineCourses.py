@@ -31,7 +31,3 @@ class onlineCourse:
     
     def get_courseId(self):
         return self.courseId
-    
-
-        
-        
