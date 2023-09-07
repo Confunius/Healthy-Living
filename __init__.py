@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, g, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, g, send_file, flash
 import shelve
 # import dbm.gnu
 import sys
@@ -7,7 +7,6 @@ import os
 from datetime import datetime, timedelta
 import time
 import stripe
-import flash
 from dataclasses import dataclass, field
 # sys.path.remove(main_dir)
 import requests
@@ -228,7 +227,9 @@ def UserRegistrationPage():
         db['users'] = users_dict #put everything back
         db.close()
         send_verification_email(create_user_form.userEmail.data)
-        #flash('A verification email has been sent. Please check your inbox.', category='success')
+        flash('A verification email has been sent. Please check your inbox.', category='success')
+        #session["email_success"] = "A verification email has been sent. Please check your inbox."
+        #time.sleep(2)
         return redirect("/Login")
     return render_template('/Customer/account/CustomerRegistration.html', form=create_user_form)
 
@@ -689,18 +690,22 @@ def course_admin():
     course_dict = {}
     db_path = 'Objects/transaction/course.db'
     if not os.path.exists(db_path):
+        
         placeholder_data = [
             {
                 "courseId": "C1",
                 "videos": "https://www.youtube.com/watch?v=XFjzTttyrv8",
+                "image": "http://www.healthtransformation.net/wp-content/uploads/2015/12/Human-Body-and-Mind-3D-Illustration.jpg",
                 "price": 15,
                 "studentPurchaseList": [],
                 "refundDescription": "30 days maximum",
+                'name': 'Duality of Body and Mind',
                 "courseContent": { 
 
                     'Basic Nutrition Module 1 - Getting started': {
                         'video':'https://youtu.be/eVBWHnHEX6I?si=PWb9nw5dN0fztcZV',
                         'article':'https://www.nutrition.gov/about-us#:~:text=Nutrition.gov%20is%20a%20USDA,and%20food%20safety%20for%20consumers',
+                        'image': 'https://247wallst.com/wp-content/uploads/2020/04/imageForEntry9-bbt.jpg',
                         'quiz': {
                             1: {
                                 'Question 1': 'Name an example of an fruit','options': ['a) Apple','b) Fish', 'c) Ginger', 'd) Carrot'],'correct_answer': 'a'
@@ -720,6 +725,7 @@ def course_admin():
                     'What is Mental Health? Module 2': {
                         'video':'https://www.youtube.com/embed/G0zJGDokyWQ?si=rKBjzmha55fR9Ov9',
                         'article':'https://www.cdc.gov/mentalhealth/learn/index.htm',
+                        'image': 'http://www.pickthebrain.com/blog/wp-content/uploads/2014/01/mental-fitness.jpg',
                         'quiz': {
                             1: {
                                 'Question 1': 'Name one example of mental disorder', 'options': ['a) Fatigue','b) Excitement', 'c) Anxiety', 'd) Sadness'],
@@ -741,6 +747,7 @@ def course_admin():
                     'Motivation and What Really Drives Human Behavior? Module 3': {
                         'video':'https://www.youtube.com/watch?v=IhEcX3226pM',
                         'article':'https://positivepsychology.com/motivation-human-behavior/',
+                        'image':'https://1.bp.blogspot.com/-w7NNijz2U_o/VZhnyAGnYKI/AAAAAAAAAHU/CMXUZbX4itk/s1600/school-of-psychology-2.jpg',
                         'quiz': {
                             1: {
                                 'Question 1': 'What is the 3 ideal solutions to solve complex things coming from your background?', 'options': ['a) Change your behavior, Comparing your personal truth with others positively, Behave your way to success','b) Stop rewarding bad behavior, Comparing your personal truth with others positively, Behave your way to success', 'c) Change your behavior, Stop rewarding bad behavior, Comparing your personal truth with others positively', 'd) Change your behavior, Stop rewarding bad behavior, Behave your way to success'],
@@ -753,7 +760,7 @@ def course_admin():
                             },
 
                             3: {
-                                'Question 3': 'What happens if you do not treat mental disorders?', 'options': ['a) You will be happier','b) You will definitely age gracefully', 'c) You will have increased disability', 'd) None of the above'],
+                                'Question 3': 'What is Drive Motivation?', 'options': ['a) When you want to do something.','b) When talking about motivation, the topic of goals inevitably comes up.', 'c) When the sympathetic nervous system produces epinephrine and norepinephrine, it creates energy for action.', 'd) None of the above'],
                                 'correct_answer': 'c'
                             }
 
@@ -762,9 +769,24 @@ def course_admin():
                     'How To Set SMART Goals for Better Health and Wellness? Module 4': {
                         'video':'https://www.youtube.com/watch?v=IzuGj8hKGTc',
                         'article':'https://www.noomii.com/articles/13906-smart-goal-method',
+                        'image':'http://www.boardandlife.com/wp-content/uploads/2019/10/why-is-goal-setting-important-organizations.jpg',
                         'quiz': {
-                            
-                        }
+                            1: {
+                                'Question 1': 'Which one is the acronym for SMART Goals?', 'options': ['a) Measurable','b) Monetary', 'c) Meaningful', 'd) Mortified'],
+                                'correct_answer': 'a'
+                            },
+
+                            2: {
+                                'Question 2': 'What is an example Achievable Goal?', 'options': ['a) Should I eat 3 vegetables a day?','b) I will eat 2 vegetables a day, 2 times a week.', 'c) I will eat 200 vegetables a day, 2 times a week.', 'd) I will go to the gym 30 times a day.'],
+                                'correct_answer': 'b'
+                            },
+
+                            3: {
+                                'Question 3': 'How to create a SMART Goal Map?', 'options': ['a) Identify your long-term vision','b) Develop work-life balance', 'c) Creating a scehdule', 'd) None of the above'],
+                                'correct_answer': 'a'
+                            }
+
+                            }
                     }
                  },
                  "requirements": "Compulsory to attend at least one module",
@@ -774,12 +796,31 @@ def course_admin():
             }
         ]
 
-    db = shelve.open(db_path, 'c')
-    for data in placeholder_data:
-        course = onlineCourse(
+        db = shelve.open(db_path, 'c')
+        for data in placeholder_data:
+            course = onlineCourse(
+                data["courseId"],
+                data["videos"],
+                data["name"],
+                #data["createdBy"],
+                data["image"],
+                data["price"],
+                float(data["studentPurchaseList"]),
+                data["refundDescription"],
+                data["courseContent"],
+                data["requirements"],
+                data["description"],
+                data["courseForWho"],
+                data["instructor"],
+                )
+            db[course.courseId] = course
+        else:
+            course = onlineCourse(
             data["courseId"],
             data["videos"],
-            data["createdBy"],
+            data["name"],
+            #data["createdBy"],
+            data["image"],
             data["price"],
             float(data["studentPurchaseList"]),
             data["refundDescription"],
@@ -789,23 +830,8 @@ def course_admin():
             data["courseForWho"],
             data["instructor"],
             )
-        db[course.courseId] = course
-    else:
-        course = onlineCourse(
-        data["courseId"],
-        data["videos"],
-        data["createdBy"],
-        data["price"],
-        float(data["studentPurchaseList"]),
-        data["refundDescription"],
-        data["courseContent"],
-        data["requirements"],
-        data["description"],
-        data["courseForWho"],
-        data["instructor"],
-        )
-        db[course.courseId] = course
-    db.close()
+            db[course.courseId] = course
+        db.close()
 
     db = shelve.open(db_path, 'r')
     # open the db and retrieve the dictionary
@@ -819,11 +845,12 @@ def course_admin():
         course_list.append(product)
     # prints out all the products and their info
     for course in course_list:
-        print(course.courseId, course.videos, course.createdBy, course.price, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
-        print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "Created By: ", course.createdBy, "\n", "Course Price: ", course.price, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
-    return render_template('/Admin/transaction/Course.html', course=course_list, count=len(course_list))
+        print(course.courseId, course.videos, course.price, course.name, course.studentPurchaseList, course.refundDescription, course.courseContent, course.requirements, course.description, course.courseForWho, course.instructor)
+        print("Course ID: ", course.courseId, "\n", "Product video: ", course.videos, "\n", "\n", "Course Price: ", course.price, "\n", "Course Name", course.name, "\n", "Student Purchase List: ", course.studentPurchaseList, "\n", "Refund Description: ", course.refundDescription, "\n", "Course Content: ", course.courseContent, "\n", "Requirements: ", course.requirements, "\n", "Description:", course.description, "\n", "Course For Who:", course.courseForWho, "\n", "Instructor: ", course.instructor)
+    return render_template('/Teachers/teacherLoggedInHome.html', course=course_list, count=len(course_list))
 
 
+#688 - 822
 
 @app.route('/review/<product_id>', methods=['POST'])
 def add_review(product_id):
