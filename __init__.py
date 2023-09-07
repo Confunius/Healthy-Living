@@ -35,7 +35,7 @@ from Objects.account.Forms import DelimitedNumberInput, createUser, createCourse
 
 
 WeiHeng_Domain = "https://congenial-disco-5g444v96pv537v7x-5000.app.github.dev/"
-WeiHeng_Domain = "http://127.0.0.1:5000/"
+# WeiHeng_Domain = "http://127.0.0.1:5000/"
 Public_key = ""
 Private_key = ""
 
@@ -724,35 +724,35 @@ def courses():
 
 @app.route('/course/<course_id>')
 def course_info(course_id):
-    error = request.args.get('error')
-    error_message=None
-    if error == "stock_limit_exceeded":
-        error_message = "You've exceeded the available stock for this product."
-    elif error == "product_alr_in_wishlist":
-        error_message = "Product already in wishlist."
+    # error = request.args.get('error')
+    # error_message=None
+    # if error == "stock_limit_exceeded":
+    #     error_message = "You've exceeded the available stock for this product."
+    # elif error == "product_alr_in_wishlist":
+    #     error_message = "Product already in wishlist."
 
     review_list = []
-    pdb_path = 'Objects/transaction/course.db'
-    db_path = 'Objects/transaction/review.db'
+    cdb_path = 'Objects/transaction/course.db'
+    # db_path = 'Objects/transaction/review.db'
 
     try:
-        pdb = shelve.open(pdb_path, 'r')
-        if course_id in pdb.keys():
-            productobj = pdb[course_id]
-        pdb.close()
+        cdb = shelve.open(cdb_path, 'r')
+        if course_id in cdb.keys():
+            courseobj = cdb[course_id]
+        cdb.close()
     except:
-        productobj = None
+        courseobj = None
 
-    try:
-        db = shelve.open(db_path, 'r')
-        for key in db:
-            review = db[key]
-            if review.product_id == course_id:
-                review_list.append(review)
+    # try:
+    #     db = shelve.open(db_path, 'r')
+    #     for key in db:
+    #         review = db[key]
+    #         if review.product_id == course_id:
+    #             review_list.append(review)
 
-        db.close()
-    except:
-        review_list = []
+    #     db.close()
+    # except:
+    #     review_list = []
 
     # Calculate average rating
     total_rating = sum(review.rating for review in review_list)
@@ -763,9 +763,8 @@ def course_info(course_id):
     rounded_rating = round(average_rating)
 
 
-    return render_template('/Customer/transaction/Course.html', productobj=productobj,
-                            review_list=review_list, count=len(review_list), rounded_rating=rounded_rating,
-                            error_message=error_message)
+    return render_template('/Customer/transaction/CourseInfo.html', courseobj=courseobj,
+                            )
 
 #create course
 @app.route('/admin/courses')
