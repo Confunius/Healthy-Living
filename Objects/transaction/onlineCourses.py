@@ -29,6 +29,9 @@ class onlineCourse:
             'instructor': self.instructor
         }
     
+    def get_courseId(self):
+        return self.courseId
+    
 
         
         
