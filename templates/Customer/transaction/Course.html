@@ -57,15 +57,15 @@
           <div class="search mb-3">
               <input class="form-control bgd-light" id="search" placeholder="Search" type="text">
           </div>
-          {% if coursesList|length == 0 %}
+          {% if onlineCourse|length == 0 %}
           <h1 class="text-center">No courses found</h1>
           {% else %}
           <div class="d-flex flex-wrap flex-fill">
-              {% for course in coursesList %}
-              {% if course.stock != 0 %}
+              {% for course in onlineCourse %}
+              
               <div class="product text-center mb-3 mr-3">
                   <div class="product-image" style="width: 300px;height: 500px;background-color: white; position:relative;">
-                      <img src="{{ product.image }}" style="
+                      <img src="{{ course.image }}" style="
                       width: 100%;
                       position: absolute;
                       top: 0;
@@ -75,7 +75,7 @@
                   ">
                   </div>
                   <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
-                      <a class="product-title h5 txt-dark" id="title" href="{{ url_for('product_info', product_id=product.product_id) }}">{{ product.name }}</a>
+                      <a class="product-title h5 txt-dark" id="title" href="{{ url_for('course_info', courseId=course.courseId) }}">{{ course.name }}</a>
                       <div class="rating d-flex flex-row justify-content-around">
                           <div class="d-flex flex-row">
                           {% for _ in range(product.average_rating) %}
@@ -86,12 +86,12 @@
                       </div>
                       <h4 class="price">${{ "%0.2f"|format(product.list_price) }}</h4>
                       <form action="{{ url_for('add_to_cart') }}" method="post">
-                          <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                          <input type="hidden" name="courseId" value="{{ course.courseId }}">
                           <button type="submit" class="align-self-end add-to-cart p-3" >Add to Cart</button>
                       </form>
                   </div>
               </div>
-              {% endif %}
+              
               {% endfor %}
           </div>
           {% endif %}
