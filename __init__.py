@@ -680,10 +680,10 @@ def course_admin():
                 "studentPurchaseList": [],
                 "refundDescription": "30 days maximum",
                 "courseContent": { 
-
                     'Basic Nutrition Module 1 - Getting started': {
                         'video':'https://youtu.be/eVBWHnHEX6I?si=PWb9nw5dN0fztcZV',
                         'article':'https://www.nutrition.gov/about-us#:~:text=Nutrition.gov%20is%20a%20USDA,and%20food%20safety%20for%20consumers',
+<<<<<<< HEAD
                         'quiz': {
                             1: {
                                 'Question 1': 'Name an example of an fruit','options': ['a) Apple','b) Fish', 'c) Ginger', 'd) Carrot'],'correct_answer': 'a'
@@ -699,10 +699,14 @@ def course_admin():
                                 'correct_answer': 'c'
                             }
                         }
+=======
+                        'quiz': {}
+>>>>>>> 9c08e4e (test)
                     },
                     'What is Mental Health? Module 2': {
                         'video':'https://www.youtube.com/embed/G0zJGDokyWQ?si=rKBjzmha55fR9Ov9',
                         'article':'https://www.cdc.gov/mentalhealth/learn/index.htm',
+<<<<<<< HEAD
                         'quiz': {
                             1: {
                                 'Question 1': 'Name one example of mental disorder', 'options': ['a) Fatigue','b) Excitement', 'c) Anxiety', 'd) Sadness'],
@@ -720,10 +724,14 @@ def course_admin():
                             }
 
                             }
+=======
+                        'quiz': {}
+>>>>>>> 9c08e4e (test)
                     }, 
                     'Motivation and What Really Drives Human Behavior? Module 3': {
                         'video':'https://www.youtube.com/watch?v=IhEcX3226pM',
                         'article':'https://positivepsychology.com/motivation-human-behavior/',
+<<<<<<< HEAD
                         'quiz': {
                             1: {
                                 'Question 1': 'What is the 3 ideal solutions to solve complex things coming from your background?', 'options': ['a) Change your behavior, Comparing your personal truth with others positively, Behave your way to success','b) Stop rewarding bad behavior, Comparing your personal truth with others positively, Behave your way to success', 'c) Change your behavior, Stop rewarding bad behavior, Comparing your personal truth with others positively', 'd) Change your behavior, Stop rewarding bad behavior, Behave your way to success'],
@@ -741,14 +749,22 @@ def course_admin():
                             }
 
                             }
+=======
+                        'quiz': {}
+>>>>>>> 9c08e4e (test)
                     },
                     'How To Set SMART Goals for Better Health and Wellness? Module 4': {
                         'video':'https://www.youtube.com/watch?v=IzuGj8hKGTc',
                         'article':'https://www.noomii.com/articles/13906-smart-goal-method',
+<<<<<<< HEAD
                         'quiz': {
                             
                         }
                     }
+=======
+                        'quiz': {}
+                    } 
+>>>>>>> 9c08e4e (test)
                  },
                  "requirements": "Compulsory to attend at least one module",
                  "description": "Here in this course, we will cover 2 different areas related to both the human body and the human mind! With 4 modules, this comprehensive course leaves no stone unturned! This course includes quizzes, videos and articles. introduction: 20 mins, module 1 : 30 mins, module 2 : 15 mins, module 3 : 25 mins, module 4 : 30 mins, total time taken: 2 hours",
@@ -777,8 +793,8 @@ def course_admin():
         course = onlineCourse(
         data["courseId"],
         data["videos"],
-        data["createdBy"],
-        data["price"],
+        None,
+        None,
         float(data["studentPurchaseList"]),
         data["refundDescription"],
         data["courseContent"],
