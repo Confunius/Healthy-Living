@@ -32,16 +32,27 @@
               <hr class="half-screen-line" style="margin-bottom: 5px;">
           </div>
           <!-- Iterating over the wishlist items -->
-          {% for item in wishlist %}
-              <div class="wishlist-item">
-                  <!-- Display item image -->
-                  <img src="{{ item.image }}" alt="{{ item.name }}" style="width: 180px; height: 300px;">
-                  <!-- Display item name -->
-                  <h3>{{ item.name }}</h3>
-                  <!-- Display item price -->
-                  <p>Price: ${{ item.price }}</p>
-              </div>
-              <hr> <!-- Separator line between items -->
+          {% for product in wishlist %}
+<div class="product text-center mb-3 mr-3">
+                    <div class="product-image" style="width: 300px;height: 500px;background-color: white; position:relative;">
+                        <img src="{{ product.image }}" style="
+                        width: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        margin:auto
+                    ">
+                    </div>
+                    <div class="product-info d-flex flex-column bgd-dark txt-dark p-3" style="width:300px">
+                        <a class="product-title h5 txt-dark" id="title" href="{{ url_for('product_info', product_id=product.product_id) }}">{{ product.name }}</a>
+                        <h4 class="price">${{ "%0.2f"|format(product.price) }}</h4>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                            <button type="submit" class="align-self-end add-to-cart p-3" >Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
           {% endfor %}
       </div>
       </div>

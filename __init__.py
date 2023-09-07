@@ -36,7 +36,7 @@ from Objects.account.Forms import DelimitedNumberInput, createUser, userLogin, u
 
 
 WeiHeng_Domain = "https://congenial-disco-5g444v96pv537v7x-5000.app.github.dev/"
-WeiHeng_Domain = "http://127.0.0.1:5000/"
+# WeiHeng_Domain = "http://127.0.0.1:5000/"
 Public_key = ""
 Private_key = ""
 
@@ -71,7 +71,7 @@ def send_verification_email(email):
         from_email=From('siiewweiheng@gmail.com'),
         to_emails=To(email),
         subject='Email Verification',
-        html_content=f'Thank you for registering for our FashionHub membership.<br>If this was not done by you, please ignore this email.<br><br>Please click this to <a href="{verification_link}">verify</a> your account.<br><br>Best Regards,<br> FashionHub Accounts Department<br><img src="https://thumbs.dreamstime.com/z/sustainable-fashion-logo-eco-friendly-production-label-icon-badge-clothes-hanger-green-leaves-natural-recycling-215122758.jpg" width="120" height="120"></img>'
+        html_content=f'Thank you for registering an account for our Healthy Living Website.<br>If this was not done by you, please ignore this email.<br><br>Please click this to <a href="{verification_link}">verify</a> your account.<br><br>Best Regards,<br> FashionHub Accounts Department<br><img src="https://thumbs.dreamstime.com/z/sustainable-fashion-logo-eco-friendly-production-label-icon-badge-clothes-hanger-green-leaves-natural-recycling-215122758.jpg" width="120" height="120"></img>'
     )
     try:
         response = sg.send(message)
@@ -119,6 +119,7 @@ def Login():
 
         print(users_dict)
         for key, user_data in users_dict.items():
+            print(key, user_data.get_userPassword, user_data.get_userEmail())
             if user_data.get_userEmail() == email and user_data.get_userPassword() == password:
                 if user_data.get_userVerified() == 1:
                     session['id'] = key
@@ -445,12 +446,12 @@ def AddToWishList(product_id):
                 return redirect(url_for('product_info', product_id=product.product_id, error="product_alr_in_wishlist"))
 
         wishlistobj.add_to_wishlist(WishlistItem(session['id'], product_id, product.name, product.list_price, product.image))
-    return redirect(url_for('Wishlist'))
+    return redirect(url_for('wishList'))
 
 
 
 @app.route('/Wishlist')
-def Wishlist():
+def wishList():
     return render_template('/Customer/account/wishlist.html', wishlist=wishlistobj.wishlist_items)
 
 @app.route('/CustomerAccountDelete')
