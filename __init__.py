@@ -726,8 +726,8 @@ def course_admin():
         course = onlineCourse(
         data["courseId"],
         data["videos"],
-        None,
-        None,
+        data["createdBy"],
+        data["price"],
         float(data["studentPurchaseList"]),
         data["refundDescription"],
         data["courseContent"],
