@@ -3,38 +3,33 @@
 
 {% block content %}
 {% from "_formHelper.html" import render_field %}
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Vertical Navbar -->
-      <nav class="navbar list-group col-md-2 vertical-nav navbar col-md-3 vertical-nav">
-        <ul class="navbar-nav">
-          <li></li>
-          <li class="nav-item active list-group-item">
-              <a class="nav-link txt-light" href="/UserProfile">My Account </a>
-          </li>
-          <li class="nav-item list-group-item">
-              <a class="nav-link txt-light" href="/Wishlist">My Wishlist</a>
-          </li>
-          <li class="nav-item list-group-item">
-              <a class="nav-link txt-light" href="/OrderStatus">Order Status</a>
-          </li>
-          <li class="nav-item list-group-item">
-              <a class="nav-link txt-light" href="/OrderHistory">Order History</a>
-          </li>
-          <li class="nav-item list-group-item">
-            <a class="nav-link txt-light" href="{{ url_for('PaymentMethod', id=session['id'])}} ">Payment Methods</a>
-          </li>
-          <!-- Add more history items as needed -->
-        </ul>
-      </nav>
+<div class="row flex-row">
+  <!-- Vertical Navbar -->
+  <nav class="list-group vertical-nav pr-5 border-right" style ="border-right-width: 5px!important;">
+    <ul class="navbar-nav">
+      <li></li>
+      <li class="nav-item active list-group-item">
+          <a class="nav-link txt-light" href="/UserProfile">My Account </a>
+      </li>
+      <li class="nav-item list-group-item">
+          <a class="nav-link txt-light" href="/Wishlist">My Wishlist</a>
+      </li>
+      <li class="nav-item list-group-item">
+          <a class="nav-link txt-light" href="/OrderStatus">Order Status</a>
+      </li>
+      <li class="nav-item list-group-item">
+          <a class="nav-link txt-light" href="/OrderHistory">Order History</a>
+      </li>
+      <li class="nav-item list-group-item">
+        <a class="nav-link txt-light" href="{{ url_for('PaymentMethod', id=session['id'])}} ">Payment Methods</a>
+      </li>
+      <!-- Add more history items as needed -->
+    </ul>
+  </nav>
       <!-- Vertical white line -->
-      <div class="vertical-line col-md-13"></div>
-      <!-- Your main content here -->
-      <div class="col-md-8">
-        <br><br>
-        <!-- Add your main content here -->
-        <div class="container">
-            <h2 style="font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 28px;">CHANGE PASSWORD</h2>
+      <div class="flex-fill">
+        <div class="container d-flex flex-column txt-light p-3 ml-5">
+          <h2 style="font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 28px;">CHANGE PASSWORD</h2>
           <div class="line-container">
             <hr class="half-screen-line" style="margin-bottom: 5px;">
           </div>

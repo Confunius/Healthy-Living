@@ -428,7 +428,45 @@ def UserHomepage():
 # Account
 @app.route('/UserProfile')
 def UserProfile():
-    return render_template('/Customer/account/usersettings.html')
+    edit_user_form = userEditInfo(request.form)
+    if request.method == 'POST' and edit_user_form.validate():
+        db = shelve.open('Objects/account/user.db', 'c')
+        users_dict = {}
+        try:
+            users_dict = db['users']  # user_dict = {1:UserObject, 2:UserObject} #take everything out
+        except:
+            db["users"] = users_dict
+            print("Error in retrieving Users from user.db")
+        
+        tempUser = users_dict[session['id']]
+        tempUser.set_userFullName(edit_user_form.userFullName.data)
+        tempUser.set_userName(edit_user_form.userName.data)
+        tempUser.set_userEmail(edit_user_form.userEmail.data)
+        tempUser.set_userAddress(edit_user_form.userAddress.data)
+        tempUser.set_userPostalCode(edit_user_form.userPostalCode.data)
+
+        session['userfullname'] = tempUser.get_userFullName()
+        session['username'] = tempUser.get_userName()
+        session['useremail'] = tempUser.get_userEmail()
+        session['useraddress'] = tempUser.get_userAddress()
+        session['userpostalcode'] = tempUser.get_userPostalCode()
+
+        users_dict[id] = tempUser
+        db['users'] = users_dict
+        db.close()
+        return redirect(url_for('UserProfile'))
+    else:
+        db = shelve.open('Objects/account/user.db', 'r')
+        users_dict = db['users']
+        db.close()
+
+        user = users_dict.get(session['id'])
+        edit_user_form.userFullName.data = user.get_userFullName()
+        edit_user_form.userName.data = user.get_userName()
+        edit_user_form.userEmail.data = user.get_userEmail()
+        edit_user_form.userAddress.data = user.get_userAddress()
+        edit_user_form.userPostalCode.data = user.get_userPostalCode()
+    return render_template('/Customer/account/usersettings.html', form=edit_user_form)
 
 @app.route('/OrderStatus')
 def OrderStatus():
