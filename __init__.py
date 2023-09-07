@@ -2447,8 +2447,6 @@ faqs = [
                     "We're sorry, but we only ship to Singapore for the time being. We may expand to international borders in the future, thank you for your support!"]
 
     }
-
-]
 if get_faqs_from_shelve() == '':
     save_faqs_to_shelve(faqs)
 
