@@ -35,6 +35,7 @@ from Objects.account.Forms import DelimitedNumberInput, createUser, userLogin, u
 
 
 WeiHeng_Domain = "https://congenial-disco-5g444v96pv537v7x-5000.app.github.dev/"
+WeiHeng_Domain = "http://127.0.0.1:5000/"
 Public_key = ""
 Private_key = ""
 
@@ -130,7 +131,10 @@ def Login():
                     db.close()
 
                     print("User successfully saved.")
-                    return redirect(url_for('CustomerHomepage'))
+                    if session["user_role"] == "teacher":
+                        return redirect(url_for('TeacherHomepage'))
+                    else:
+                        return redirect(url_for('CustomerHomepage'))
                 else:
                     #flash("Please verify/create your account.", category="danger")
                     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
@@ -157,40 +161,14 @@ def Login():
                     session['admin_logged_in'] = True
                     db.close()
                     return redirect(url_for('ahome'))
+
     
-        teachers_dict = db.get('teachers', {})
-        print("Plz work 1")
-        print(teachers_dict)
-
-        teacher_email = create_user_form.userEmail.data
-        teacher_password = create_user_form.userPassword.data
-
-        print("Plz work 1.5")
-
-        for key, teacher_data in teachers_dict.items():
-            print("Plz work 1.6")
-            if teacher_data.get_teacherEmail() == teacher_email and teacher_data.get_teacherPassword() == teacher_password:
-                if teacher_data.get_teacherVerified() == 'deactivated':
-                    #flask.flash("Your account has been deactivated. Please contact an administrator to reactivate your account.", category="danger")
-                    print("Plz work 2")
-                    return render_template('/Customer/account/LoginPage.html', form=create_user_form)
-                else:
-                    """
-                    session['id'] = key
-                    session['teacherfname'] = teacher_data.get_teacherFirstName()
-                    session['teacherlname'] = teacher_data.get_teacherLastName()
-                    session['teacherusername'] = teacher_data.get_teacherUserName()
-                    session['teacheremail'] = teacher_data.get_teacherEmail()
-                    session['teacherphonenumber'] = teacher_data.get_teacherPhoneNumber()
-                    session['teacher_logged_in'] = True
-                    db.close()
-                    """
-                    print("Plz work 3")
-                    return redirect(url_for('ahome'))
-
-    print("pLZ work 4")
     return render_template('/Customer/account/LoginPage.html', form=create_user_form)
 
+
+@app.route('/Teachers/CreateAccount')
+def TeacherHomepage():
+    return render_template('/Teachers/teacherLoggedInHome.html')
 
 @app.route('/')
 def CustomerHomepage():
@@ -1791,10 +1769,6 @@ def join_and_filter(list_):
 
 app.jinja_env.filters['join_and'] = join_and_filter
 
-
-@app.route('/Teachers/CreateAccount')
-def teacher_createacc():
-    return render_template('/Teachers/teacherLoggedInHome.html')
 
 @app.route('/admin/product')
 def product_admin():
