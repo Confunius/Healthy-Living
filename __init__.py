@@ -180,7 +180,7 @@ def CustomerHomepage():
 
     return render_template('/Customer/homepage.html')
 
-@app.route('/Blog')
+@app.route('/blog')
 def Blog():
     return render_template('/Admin/blog.html')
 
