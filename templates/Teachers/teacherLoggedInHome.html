@@ -82,104 +82,33 @@
               {{ render_field(form.courseId, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="name">Course Name:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                required
-              />
+              {{ render_field(form.videos, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="size_options">Student Purchase List:</label>
-              <input type="text" class="form-control" id="size_options" name="size_options" required>
-              <small class="form-text text-muted">Enter student names separated by commas.</small>
+              {{ render_field(form.price, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="description">Refund description:</label>
-              <textarea
-                class="form-control"
-                id="description"
-                name="description"
-                rows="4"
-                required
-              ></textarea>
+              {{ render_field(form.name, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="description">Course content</label>
-              <textarea
-                class="form-control"
-                id="description"
-                name="description"
-                rows="4"
-                required
-              ></textarea>
+              {{ render_field(form.studentPurchaseList, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="name">Course Requirements:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                required
-              />
+              {{ render_field(form.refundDescription, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="name">Course Description:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                required
-              />
+              {{ render_field(form.courseContent, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="category">Age Requirement</label>
-              <input
-                type="number"
-                class="form-control"
-                id="category"
-                name="category"
-                min="0"
-                max="100"
-                required
-              />
+              {{ render_field(form.requirements, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="category">Course Instructor test:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="category"
-                name="category"
-                required
-              />
+              <{{ render_field(form.description, class="form-control", style="width: 300px; height:40px;")}}
+            <div class="form-group">
+              {{ render_field(form.courseForWho, class="form-control", style="width: 300px; height:40px;")}}
             </div>
             <div class="form-group">
-              <label for="image">Image URL:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="image"
-                name="image"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="color_options">Video:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="color_options"
-                name="color_options"
-                required
-              />
-              <small class="form-text text-muted"
-                >Enter a youtube link.</small
-              >
+              {{ render_field(form.instructor, class="form-control", style="width: 300px; height:40px;")}}
             </div>
 
             <div class="modal-footer">
