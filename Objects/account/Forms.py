@@ -35,6 +35,20 @@ class createUser(FlaskForm):
     userPostalCode = StringField('Postal Code', validators=[validators.Length(min=6, max=6), validators.DataRequired()])
     userRole = SelectField('Role', [validators.DataRequired()], choices=[('', 'Select'), ('customer', 'Customer'), ('teacher', 'Teacher')])
 
+class createCourse(FlaskForm):
+    courseId = IntegerField('Course ID: ', validators=[validators.DataRequired()])
+    name = StringField('Course Name: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
+    studentPurchaseList = TextAreaField('Student Purchase List: ', validators=[validators.DataRequired()])
+    price = FloatField('Course Price: ', validators=[validators.DataRequired()])
+    image = FileField('Course Image: ', validators=[validators.DataRequired()])
+    videos = FileField('Course Video: ', validators=[validators.DataRequired()])
+    description = TextAreaField('Course Description: ', validators=[validators.DataRequired()])
+    courseContent = TextAreaField('Course Content: ', validators=[validators.DataRequired()])
+    requirements = TextAreaField('Course Requirements: ', validators=[validators.DataRequired()])
+    courseForWho = TextAreaField('Course For Who: ', validators=[validators.DataRequired()])
+    refundDescription = TextAreaField('Course Refund Description: ', validators=[validators.DataRequired()])
+    instructor = StringField('Course Instructor: ', validators=[validators.Length(min=1, max=150), validators.DataRequired()])
+
 class userLogin(Form):
     userEmail = EmailField('Email: ', [validators.DataRequired()])
     userPassword = PasswordField('Password: ', validators=[validators.DataRequired()], widget=PasswordInput(hide_value=False))
