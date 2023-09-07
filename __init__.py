@@ -686,17 +686,17 @@ def course_admin():
                         'article':'https://www.nutrition.gov/about-us#:~:text=Nutrition.gov%20is%20a%20USDA,and%20food%20safety%20for%20consumers',
                         'quiz': {
                             1: {
-                                'Question 1': 'Name an example of an fruit','options':['a) Apple','b) Fish', 'c) Ginger', 'd) Carrot'],'correct_answer': 'a'
+                                'Question 1': 'Name an example of an fruit','options': ['a) Apple','b) Fish', 'c) Ginger', 'd) Carrot'],'correct_answer': 'a'
                             },
 
                             2: {
-                                'Question 2': 'Which of the following food we have to eat sparingly?':['a) French Fries','b) BBQ Chicken', 'c) A plate of chicken bolognese', 'd) Koko Crunch'],'correct_answer': 'a'
+                                'Question 2': 'Which of the following food we have to eat sparingly?', 'options': ['a) French Fries','b) BBQ Chicken', 'c) A plate of chicken bolognese', 'd) Koko Crunch'],
+                                'correct_answer': 'a'
                                 },
 
                             3: {
-                                'Question 3': 'What cannot be considered as a measuring tool in your serving size?':['a) Hands','b) Measuring Cup', 'c) Measuring Cylinder', 'd) Measuring Spoon'],'correct_answer': 'c'
-                            }
-
+                                'Question 3': 'What cannot be considered as a measuring tool in your serving size?', 'options': ['a) Hands','b) Measuring Cup', 'c) Measuring Cylinder', 'd) Measuring Spoon'],
+                                'correct_answer': 'c'
                             }
                         }
                     },
@@ -705,15 +705,18 @@ def course_admin():
                         'article':'https://www.cdc.gov/mentalhealth/learn/index.htm',
                         'quiz': {
                             1: {
-                                'Question 1': 'Name one example of mental disorder':['a) Fatigue','b) Excitement', 'c) Anxiety', 'd) Sadness'],'correct_answer': 'c'
+                                'Question 1': 'Name one example of mental disorder', 'options': ['a) Fatigue','b) Excitement', 'c) Anxiety', 'd) Sadness'],
+                                'correct_answer': 'c'
                             },
 
                             2: {
-                                'Question 2': 'Which one is not an example of States of Positive Mental Health?':['a) Thriving','b) Content', 'c) Fufilled', 'd) Depression'],'correct_answer': 'd'
+                                'Question 2': 'Which one is not an example of States of Positive Mental Health?', 'options': ['a) Thriving','b) Content', 'c) Fufilled', 'd) Depression'],
+                                'correct_answer': 'd'
                             },
 
                             3: {
-                                'Question 3': 'What happens if you do not treat mental disorders?':['a) You will be happier','b) You will definitely age gracefully', 'c) You will have increased disability', 'd) None of the above'],'correct_answer': 'c'
+                                'Question 3': 'What happens if you do not treat mental disorders?', 'options': ['a) You will be happier','b) You will definitely age gracefully', 'c) You will have increased disability', 'd) None of the above'],
+                                'correct_answer': 'c'
                             }
 
                             }
@@ -723,15 +726,18 @@ def course_admin():
                         'article':'https://positivepsychology.com/motivation-human-behavior/',
                         'quiz': {
                             1: {
-                                'Question 1': 'What is the 3 ideal solutions to solve complex things coming from your background?':['a) Change your behavior, Comparing your personal truth with others positively, Behave your way to success','b) Stop rewarding bad behavior, Comparing your personal truth with others positively, Behave your way to success', 'c) Change your behavior, Stop rewarding bad behavior, Comparing your personal truth with others positively', 'd) Change your behavior, Stop rewarding bad behavior, Behave your way to success'],'correct_answer': 'd'
+                                'Question 1': 'What is the 3 ideal solutions to solve complex things coming from your background?', 'options': ['a) Change your behavior, Comparing your personal truth with others positively, Behave your way to success','b) Stop rewarding bad behavior, Comparing your personal truth with others positively, Behave your way to success', 'c) Change your behavior, Stop rewarding bad behavior, Comparing your personal truth with others positively', 'd) Change your behavior, Stop rewarding bad behavior, Behave your way to success'],
+                                'correct_answer': 'd'
                             },
 
                             2: {
-                                'Question 2': 'What is a possible way to improve your results in life?':['a) Fix your personal truth','b) Researching more on a topic', 'c) Change your social circle', 'd) Fix your personal weakness'],'correct_answer': 'a'
+                                'Question 2': 'What is a possible way to improve your results in life?', 'options': ['a) Fix your personal truth','b) Researching more on a topic', 'c) Change your social circle', 'd) Fix your personal weakness'],
+                                'correct_answer': 'a'
                             },
 
                             3: {
-                                'Question 3': 'What happens if you do not treat mental disorders?':['a) You will be happier','b) You will definitely age gracefully', 'c) You will have increased disability', 'd) None of the above'],'correct_answer': 'c'
+                                'Question 3': 'What happens if you do not treat mental disorders?', 'options': ['a) You will be happier','b) You will definitely age gracefully', 'c) You will have increased disability', 'd) None of the above'],
+                                'correct_answer': 'c'
                             }
 
                             }
@@ -742,7 +748,7 @@ def course_admin():
                         'quiz': {
                             
                         }
-                    } 
+                    }
                  },
                  "requirements": "Compulsory to attend at least one module",
                  "description": "Here in this course, we will cover 2 different areas related to both the human body and the human mind! With 4 modules, this comprehensive course leaves no stone unturned! This course includes quizzes, videos and articles. introduction: 20 mins, module 1 : 30 mins, module 2 : 15 mins, module 3 : 25 mins, module 4 : 30 mins, total time taken: 2 hours",
