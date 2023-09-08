@@ -1,7 +1,7 @@
 # Healthy-Living
 > Healthy-Living is a ecommerce and online course website where the ecommerce portion is extended from EcoFashion, a website regarding sustainable ecommerce that was made in the past.
 
-[website link](http://voidcodes.pythonanywhere.com/)
+[website link](http://voidcodes.pythonanywhere.com/) - limited functionality: databases doesn't work
 
 Table of contents
  - [Meet Our Team](#Meet-Our-Team)
